@@ -67,6 +67,23 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
   end
 
+  describe "#acting_as=" do
+    it "sets acts_as model" do
+      product = Product.new(name: 'new product', price: 0.99)
+      pen = Pen.new
+      pen.acting_as = product
+      expect(pen.acting_as).to eq(product)
+    end
+  end
+
+  describe "#dup" do
+    it "duplicates actable model as well" do
+      p = pen.dup
+      expect(p.name).to eq('pen')
+      expect(p.price).to eq(0.8)
+    end
+  end
+
   it "have supermodel attributes accessible on creation" do
     expect{Pen.create(pen_attributes)}.to_not raise_error
   end

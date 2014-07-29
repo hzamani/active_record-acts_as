@@ -49,6 +49,10 @@ module ActiveRecord
         super || acting_as.respond_to?(name)
       end
 
+      def dup
+        super.acting_as = acting_as.dup
+      end
+
       def method_missing(method, *args, &block)
         if acting_as.respond_to?(method)
           acting_as.send(method, *args, &block)
