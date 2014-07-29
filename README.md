@@ -150,6 +150,12 @@ acts_as :person, -> { includes(:friends) }
 Make sure you know what you are doing when ovrewriting `polymorphic` option.
 
 
+## Migrating from acts_as_relation
+
+Replace `acts_as_superclass` in models with `actable` and if you where using
+`:as_relation_superclass` option on `create_table` remove it and use `t.actable` on column definitions.
+
+
 ## Contributing
 
 1. Fork it ( https://github.com/hzamani/active_record-acts_as/fork )
