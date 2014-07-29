@@ -1,6 +1,9 @@
+[![Build Status](https://travis-ci.org/hzamani/active_record-acts_as.svg)](https://travis-ci.org/hzamani/active_record-acts_as)
 [![Code Climate](https://codeclimate.com/github/hzamani/active_record-acts_as.png)](https://codeclimate.com/github/hzamani/active_record-acts_as)
 
 # ActiveRecord::ActsAs
+
+This is a refactor of [`acts_as_relation`](https://github.com/hzamani/acts_as_relation)
 
 Simulates multiple-table-inheritance (MTI) for ActiveRecord models.
 By default, ActiveRecord only supports single-table inheritance (STI).
@@ -15,7 +18,7 @@ a seprate table for each product type, i.e. a `pens` table with `color` column.
 
 ## Requirements
 
-AciveRecord 4
+`AciveRecord ~> 4`
 
 ## Installation
 
