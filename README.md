@@ -138,7 +138,7 @@ acts_as :person, -> { includes(:friends) }
 ```
 
 `actable` support all `belongs_to` options, where defaults are these:
-`polymorphic: true, dependent: :delete`
+`polymorphic: true, dependent: :delete, autosave: true`
 
 Make sure you know what you are doing when ovrewriting `polymorphic` option.
 
