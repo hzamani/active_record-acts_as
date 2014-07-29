@@ -9,10 +9,11 @@ module ActiveRecord
           options, scope = scope, nil if Hash === scope
           options = {as: :actable, dependent: :destroy, validate: false, autosave: true}.merge options
 
-          has_one name, scope, options
+          reflections = has_one name, scope, options
           default_scope -> { eager_load(name) }
           validate :actable_must_be_valid
 
+          cattr_reader(:acting_as_reflection) { reflections[name.to_sym] }
           cattr_reader(:acting_as_name) { name.to_s }
           cattr_reader(:acting_as_model) { name.to_s.camelize.constantize }
           class_eval "def acting_as() #{name} || build_#{name} end"
