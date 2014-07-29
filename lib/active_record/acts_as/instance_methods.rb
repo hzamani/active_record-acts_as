@@ -20,7 +20,7 @@ module ActiveRecord
       protected :actable_must_be_valid
 
       def read_attribute(attr_name, *args, &block)
-        if attribute_method?(attr_name)
+        if attribute_method?(attr_name.to_s)
           super
         else
           acting_as.read_attribute(attr_name, *args, &block)
@@ -28,7 +28,7 @@ module ActiveRecord
       end
 
       def write_attribute(attr_name, value, *args, &block)
-        if attribute_method?(attr_name)
+        if attribute_method?(attr_name.to_s)
           super
         else
           acting_as.send(:write_attribute, attr_name, value, *args, &block)
