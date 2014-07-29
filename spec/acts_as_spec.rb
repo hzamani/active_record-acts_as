@@ -125,4 +125,34 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(pen.store).to eq(store)
     end
   end
+
+  context "Querying" do
+    before(:each) { clear_database }
+
+    it ".where works with supermodel attributes" do
+      red_pen = Pen.create(name: 'red pen', price: 0.8, color: 'red')
+      blue_pen = Pen.create(name: 'blue pen', price: 0.8, color: 'blue')
+      black_pen = Pen.create(name: 'black pen', price: 0.9, color: 'black')
+
+      expect{Pen.where(price: 0.8)}.to_not raise_error
+      expect(Pen.where(price: 0.8)).to include(red_pen, blue_pen)
+      expect(Pen.where(price: 0.8)).to_not include(black_pen)
+    end
+
+    it "find_by works with supermodel attributes" do
+      red_pen = Pen.create(name: 'red pen', price: 0.8, color: 'red')
+      blue_pen = Pen.create(name: 'blue pen', price: 0.8, color: 'blue')
+      black_pen = Pen.create(name: 'black pen', price: 0.9, color: 'black')
+
+      expect(Pen.find_by(name: 'red pen')).to eq(red_pen)
+      expect(Pen.find_by(name: 'blue pen')).to eq(blue_pen)
+      expect(Pen.find_by(name: 'black pen')).to eq(black_pen)
+    end
+
+    it "includes supermodel attributes in Relation.scope_for_create", :pending do
+      relation = Pen.where(name: 'new name')
+      expect(relation.scope_for_create.keys).to include(:name)
+      expect(relation.scope_for_create[:name]).to eq('new name')
+    end
+  end
 end
