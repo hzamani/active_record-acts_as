@@ -23,8 +23,9 @@ module ActiveRecord
         end
 
         def acting_as?(other = nil)
-          if respond_to? :acting_as_name
-            other.nil? || acting_as_name == other.to_s.underscore
+          if respond_to?(:acting_as_reflection) &&
+              acting_as_reflection.is_a?(ActiveRecord::Reflection::AssociationReflection)
+            other.nil? || acting_as_reflection.name.to_s == other.to_s.underscore
           else
             false
           end
@@ -37,9 +38,16 @@ module ActiveRecord
         def actable(options = {})
           name = options.delete(:as) || :actable
 
-          belongs_to name, {polymorphic: true, dependent: :delete, autosave: true}.merge(options)
+          reflections = belongs_to name, {polymorphic: true, dependent: :delete, autosave: true}.merge(options)
+
+          cattr_reader(:actable_reflection) { reflections[name] }
 
           alias_method :specific, name
+        end
+
+        def actable?
+          respond_to?(:actable_reflection) &&
+            actable_reflection.is_a?(ActiveRecord::Reflection::AssociationReflection)
         end
       end
     end

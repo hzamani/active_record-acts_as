@@ -13,6 +13,16 @@ RSpec.describe "ActiveRecord::Base subclass with #actable" do
     expect(association).to be_polymorphic
   end
 
+  describe "#actable?" do
+    it "returns true for actable models" do
+      expect(Product.actable?).to be true
+    end
+
+    it "returns false for none actable models" do
+      expect(Pen.actable?).to be false
+    end
+  end
+
   describe ".specific" do
     it "return specific submodel" do
       pen.save
