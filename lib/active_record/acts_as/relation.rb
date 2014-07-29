@@ -34,7 +34,12 @@ module ActiveRecord
           super || acting_as?(klass)
         end
 
-        def actable
+        def actable(options = {})
+          name = options.delete(:as) || :actable
+
+          belongs_to name, {polymorphic: true, dependent: :delete, autosave: true}.merge(options)
+
+          alias_method :specific, name
         end
       end
     end
