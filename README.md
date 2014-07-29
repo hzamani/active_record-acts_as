@@ -1,5 +1,7 @@
+[![Gem Version](https://badge.fury.io/rb/active_record-acts_as.svg)](http://badge.fury.io/rb/active_record-acts_as)
 [![Build Status](https://travis-ci.org/hzamani/active_record-acts_as.svg)](https://travis-ci.org/hzamani/active_record-acts_as)
 [![Code Climate](https://codeclimate.com/github/hzamani/active_record-acts_as.png)](https://codeclimate.com/github/hzamani/active_record-acts_as)
+[![Coverage Status](https://coveralls.io/repos/hzamani/active_record-acts_as/badge.png)](https://coveralls.io/r/hzamani/active_record-acts_as)
 
 # ActiveRecord::ActsAs
 
