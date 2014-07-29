@@ -3,6 +3,8 @@ require 'models'
 RSpec.describe "ActiveRecord::Base model with #acts_as called" do
   subject { Pen }
 
+  let(:pen_attributes) { {name: 'pen', price: 0.8, color: 'red'} }
+
   it "has a has_one relation" do
     association = subject.reflect_on_all_associations.find { |r| r.name == :product }
     expect(association).to_not be_nil
@@ -28,5 +30,9 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(Pen.is_a? Object).to be true
       expect(Pen.is_a? String).to be false
     end
+  end
+
+  it "have supermodel attributes accessible on creation" do
+    expect{Pen.create(pen_attributes)}.to_not raise_error
   end
 end

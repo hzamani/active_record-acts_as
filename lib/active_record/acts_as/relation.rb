@@ -11,12 +11,16 @@ module ActiveRecord
 
           has_one name, scope, options
 
-          cattr_reader(:acting_as) { name.to_s }
+          cattr_reader(:acting_as_name) { name.to_s }
+
+          class_eval "def acting_as() #{name} || build_#{name} end"
+
+          include ActsAs::InstanceMethods
         end
 
         def acting_as?(other = nil)
-          if respond_to? :acting_as
-            other.nil? || (acting_as && acting_as == other.to_s.underscore)
+          if respond_to? :acting_as_name
+            other.nil? || acting_as_name == other.to_s.underscore
           else
             false
           end
