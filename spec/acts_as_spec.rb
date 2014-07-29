@@ -128,6 +128,10 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     it "includes supermodel attributes in .to_json responce" do
       expect(pen.to_json).to eq('{"id":null,"name":"pen","price":0.8,"store_id":null,"color":"red"}')
     end
+
+    it "includes supermodel attribute names in .attribute_names responce" do
+      expect(pen.attribute_names).to include("id", "color", "name", "price", "store_id")
+    end
   end
 
   context "Querying" do

@@ -40,6 +40,11 @@ module ActiveRecord
         acting_as.attributes.except(acting_as_reflection.type, acting_as_reflection.foreign_key).merge(super)
       end
 
+      def attribute_names
+        super | (acting_as.attribute_names - [acting_as_reflection.type, acting_as_reflection.foreign_key])
+      end
+
+
       def respond_to?(name, include_private = false)
         super || acting_as.respond_to?(name)
       end
