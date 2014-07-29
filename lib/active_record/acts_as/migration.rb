@@ -11,11 +11,7 @@ module ActiveRecord
       end
 
       module Table
-        def actable(options = {})
-          name = options.delete(:as) || :actable
-          options[:polymorphic] = true
-          @base.add_reference(@table_name, name, options)
-        end
+        include TableDefinition
 
         def remove_actable(options = {})
           name = options.delete(:as) || :actable
