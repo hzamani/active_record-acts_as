@@ -73,7 +73,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
 
   context "instance" do
     it "responds to supermodel methods" do
-      %i(name name= name? name_change name_changed? name_was name_will_change! price color).each do |name|
+      %w(name name= name? name_change name_changed? name_was name_will_change! price color).each do |name|
         expect(pen).to respond_to(name)
       end
       expect(pen.present).to eq("pen - $0.8")
@@ -153,7 +153,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(Pen.find_by(name: 'black pen')).to eq(black_pen)
     end
 
-    it "includes supermodel attributes in Relation.scope_for_create", :pending do
+    it "includes supermodel attributes in Relation.scope_for_create" do
       relation = Pen.where(name: 'new name')
       expect(relation.scope_for_create.keys).to include(:name)
       expect(relation.scope_for_create[:name]).to eq('new name')
