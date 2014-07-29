@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/hzamani/active_record-acts_as.png)](https://codeclimate.com/github/hzamani/active_record-acts_as)
+
 # ActiveRecord::ActsAs
 
 Simulates multiple-table-inheritance (MTI) for ActiveRecord models.
