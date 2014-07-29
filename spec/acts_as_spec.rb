@@ -153,7 +153,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(Pen.find_by(name: 'black pen')).to eq(black_pen)
     end
 
-    it "includes supermodel attributes in Relation.scope_for_create", :pending do
+    it "includes supermodel attributes in Relation.scope_for_create" do
       relation = Pen.where(name: 'new name')
       expect(relation.scope_for_create.keys).to include(:name)
       expect(relation.scope_for_create[:name]).to eq('new name')
