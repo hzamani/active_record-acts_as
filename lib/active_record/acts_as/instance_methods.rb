@@ -19,6 +19,23 @@ module ActiveRecord
       end
       protected :actable_must_be_valid
 
+      def read_attribute(attr_name, *args, &block)
+        if attribute_method?(attr_name)
+          super
+        else
+          acting_as.read_attribute(attr_name, *args, &block)
+        end
+      end
+
+      def write_attribute(attr_name, value, *args, &block)
+        if attribute_method?(attr_name)
+          super
+        else
+          acting_as.send(:write_attribute, attr_name, value, *args, &block)
+        end
+      end
+      private :write_attribute
+
       def respond_to?(name, include_private = false)
         super || acting_as.respond_to?(name)
       end

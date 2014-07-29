@@ -3,7 +3,7 @@ require 'active_record/acts_as'
 
 class Product < ActiveRecord::Base
   actable
-
+  belongs_to :store
   validates_presence_of :name, :price
 
   def present
@@ -17,6 +17,10 @@ class Pen < ActiveRecord::Base
   validates_presence_of :color
 end
 
+class Store < ActiveRecord::Base
+  has_many :products
+end
+
 initialize_database do
   create_table :pens do |t|
     t.string :color
@@ -25,6 +29,11 @@ initialize_database do
   create_table :products do |t|
     t.string :name
     t.float :price
+    t.integer :store_id
     t.actable
+  end
+
+  create_table :stores do |t|
+    t.string :name
   end
 end

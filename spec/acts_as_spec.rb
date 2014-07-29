@@ -5,6 +5,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
 
   let(:pen_attributes) { {name: 'pen', price: 0.8, color: 'red'} }
   let(:pen) { Pen.new pen_attributes }
+  let(:store) { Store.new name: 'biggerman' }
 
   it "has a has_one relation" do
     association = subject.reflect_on_all_associations.find { |r| r.name == :product }
@@ -107,6 +108,21 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(p).to be_invalid
       p.price = 0.8
       expect(p).to be_valid
+    end
+
+    it "can set assosications defined in supermodel" do
+      store.save
+      pen.store = store
+      pen.save
+      pen.reload
+      expect(pen.store).to eq(store)
+      expect(pen.product.store).to eq(store)
+    end
+
+    it "should be appendable in an has_many relation using << operator" do
+      store.save
+      store.products << pen
+      expect(pen.store).to eq(store)
     end
   end
 end
