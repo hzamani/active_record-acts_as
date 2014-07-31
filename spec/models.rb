@@ -22,21 +22,22 @@ class Store < ActiveRecord::Base
 end
 
 module Inventory
-end
+  class ProductFeature < ActiveRecord::Base
+    self.table_name = 'inventory_product_features'
+    actable
+    validates_presence_of :name, :price
 
-class Inventory::ProductFeature < ActiveRecord::Base
-  actable
-  validates_presence_of :name, :price
-
-  def present
-    "#{name} - $#{price}"
+    def present
+      "#{name} - $#{price}"
+    end
   end
-end
 
-class Inventory::PenLid < ActiveRecord::Base
-  acts_as :product_feature
+  class PenLid < ActiveRecord::Base
+    self.table_name = 'inventory_pen_lids'
+    acts_as :product_feature, class_name: 'Inventory::ProductFeature'
 
-  validates_presence_of :color
+    validates_presence_of :color
+  end
 end
 
 initialize_database do
