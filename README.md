@@ -121,7 +121,7 @@ You can give a name to all methods in `:as` option:
 
 ```Ruby
 class Product < ActiveRecord::Base
-  actable as: producible
+  actable as: :producible
 end
 
 class Pen < ActiveRecord::Base
