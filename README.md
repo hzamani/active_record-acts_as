@@ -20,7 +20,7 @@ a seprate table for each product type, i.e. a `pens` table with `color` column.
 
 ## Requirements
 
-`AciveRecord ~> 4`
+`AciveRecord ~> 4.1.4` or newest
 
 ## Installation
 
