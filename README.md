@@ -16,11 +16,11 @@ A product has common attributes (`name`, `price`, `image` ...),
 while each type of product has its own attributes:
 for example a `pen` has `color`, a `book` has `author` and `publisher` and so on.
 With multiple-table-inheritance you can have a `products` table with common columns and
-a seprate table for each product type, i.e. a `pens` table with `color` column.
+a separate table for each product type, i.e. a `pens` table with `color` column.
 
 ## Requirements
 
-`AciveRecord ~> 4`
+`AciveRecord ~> 4.1.4` or newest
 
 ## Installation
 
@@ -121,7 +121,7 @@ You can give a name to all methods in `:as` option:
 
 ```Ruby
 class Product < ActiveRecord::Base
-  actable as: producible
+  actable as: :producible
 end
 
 class Pen < ActiveRecord::Base
@@ -133,10 +133,10 @@ change_table :products do |t|
 end
 ```
 
-`acts_as` support all `has_one` options, where defauls are there:
+`acts_as` support all `has_one` options, where defaults are there:
 `as: :actable, dependent: :destroy, validate: false, autosave: true`
 
-Make sure you know what you are doing when ovrewriting `validate` or `autodave` options.
+Make sure you know what you are doing when overwriting `validate` or `autodave` options.
 
 You can pass scope to `acts_as` as in `has_one`:
 
@@ -147,7 +147,7 @@ acts_as :person, -> { includes(:friends) }
 `actable` support all `belongs_to` options, where defaults are these:
 `polymorphic: true, dependent: :delete, autosave: true`
 
-Make sure you know what you are doing when ovrewriting `polymorphic` option.
+Make sure you know what you are doing when overwriting `polymorphic` option.
 
 
 ## Migrating from acts_as_relation
@@ -160,7 +160,7 @@ Replace `acts_as_superclass` in models with `actable` and if you where using
 
 1. Fork it ( https://github.com/hzamani/active_record-acts_as/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Test changes don't breake anything (`rspec`)
+3. Test changes don't break anything (`rspec`)
 4. Add specs for your new feature
 5. Commit your changes (`git commit -am 'Add some feature'`)
 6. Push to the branch (`git push origin my-new-feature`)
