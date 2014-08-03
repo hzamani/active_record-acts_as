@@ -14,6 +14,10 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     expect(association.options).to have_key(:as)
   end
 
+  it "has a cattr_reader for the acting_as_model" do
+    expect(subject.acting_as_model).to eq Product
+  end
+
   describe "#acting_as?" do
     it "returns true for supermodel class and name" do
       expect(Pen.acting_as? :product).to be true
@@ -178,6 +182,21 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       relation = Pen.where(name: 'new name')
       expect(relation.scope_for_create.keys).to include(:name)
       expect(relation.scope_for_create[:name]).to eq('new name')
+    end
+  end
+
+  context 'Namespaces' do
+    subject { Inventory::PenLid }
+
+    it "has a has_one relation" do
+      association = subject.reflect_on_all_associations.find { |r| r.name == :product_feature }
+      expect(association).to_not be_nil
+      expect(association.macro).to eq(:has_one)
+      expect(association.options).to have_key(:as)
+    end
+
+    it "has a cattr_reader for the acting_as_model" do
+      expect(subject.acting_as_model).to eq Inventory::ProductFeature
     end
   end
 end

@@ -15,7 +15,7 @@ module ActiveRecord
 
           cattr_reader(:acting_as_reflection) { reflections[name.to_sym] }
           cattr_reader(:acting_as_name) { name.to_s }
-          cattr_reader(:acting_as_model) { name.to_s.camelize.constantize }
+          cattr_reader(:acting_as_model) { (options[:class_name] || name.to_s.camelize).constantize }
           class_eval "def acting_as() #{name} || build_#{name} end"
           alias_method :acting_as=, "#{name}=".to_sym
 
