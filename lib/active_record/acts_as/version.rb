@@ -1,6 +1,6 @@
 
 module ActiveRecord
   module ActsAs
-    VERSION = "1.0.0.rc"
+    VERSION = "1.0.0"
   end
 end
