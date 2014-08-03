@@ -9,6 +9,10 @@ class Product < ActiveRecord::Base
   def present
     "#{name} - $#{price}"
   end
+
+  def raise_error
+    specific.non_existant_method
+  end
 end
 
 class Pen < ActiveRecord::Base
