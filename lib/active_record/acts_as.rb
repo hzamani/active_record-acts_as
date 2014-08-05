@@ -1,3 +1,5 @@
+require 'active_support'
+require 'active_record'
 require 'active_record/acts_as/version'
 require 'active_record/acts_as/relation'
 require 'active_record/acts_as/migration'

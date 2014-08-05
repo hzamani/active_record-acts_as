@@ -20,7 +20,6 @@ module ActiveRecord
           alias_method :acting_as=, "#{name}=".to_sym
 
           include ActsAs::InstanceMethods
-          extend  ActsAs::Querying
         end
 
         def acting_as?(other = nil)

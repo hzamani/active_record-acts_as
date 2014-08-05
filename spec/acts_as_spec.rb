@@ -179,9 +179,9 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
 
     it "includes supermodel attributes in Relation.scope_for_create" do
-      relation = Pen.where(name: 'new name')
-      expect(relation.scope_for_create.keys).to include(:name)
-      expect(relation.scope_for_create[:name]).to eq('new name')
+      relation = Pen.where(name: 'new name', price: 1.4, color: 'red')
+      expect(relation.scope_for_create.keys).to include('name')
+      expect(relation.scope_for_create['name']).to eq('new name')
     end
   end
 
