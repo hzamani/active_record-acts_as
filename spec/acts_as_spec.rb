@@ -158,7 +158,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
   context "Querying" do
     before(:each) { clear_database }
 
-    it ".where works with supermodel attributes" do
+    it "respects supermodel attributes in .where" do
       red_pen = Pen.create(name: 'red pen', price: 0.8, color: 'red')
       blue_pen = Pen.create(name: 'blue pen', price: 0.8, color: 'blue')
       black_pen = Pen.create(name: 'black pen', price: 0.9, color: 'black')
@@ -168,7 +168,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(Pen.where(price: 0.8)).to_not include(black_pen)
     end
 
-    it "find_by works with supermodel attributes" do
+    it "respects supermodel attributes in .find_by" do
       red_pen = Pen.create(name: 'red pen', price: 0.8, color: 'red')
       blue_pen = Pen.create(name: 'blue pen', price: 0.8, color: 'blue')
       black_pen = Pen.create(name: 'black pen', price: 0.9, color: 'black')

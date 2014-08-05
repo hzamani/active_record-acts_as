@@ -90,6 +90,10 @@ Pen.create name: 'Penie!', price: 0.8, color: 'red'
   # => #<Pen id: 1, color: "red">
 Pen.where price: 0.8
   # => [#<Pen id: 1, color: "red">]
+pen = Pen.where(name: 'new pen', color: 'black').first_or_initialize
+  # => #<Pen id: nil, color: "black">
+pen.name
+  # => "new pen"
 Product.where price: 0.8
   # => [#<Product id: 1, name: "Penie!", price: 0.8, store_id: nil, actable_id: 1, actable_type: "Pen">]
 pen = Pen.new
@@ -108,7 +112,7 @@ Product.first.specific
   # => #<Pen ...>
 ```
 
-In +has_many+ case you can use subclasses:
+In `has_many` case you can use subclasses:
 
 ```Ruby
 store = Store.create
