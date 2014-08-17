@@ -25,7 +25,14 @@ module ActiveRecord
         def acting_as?(other = nil)
           if respond_to?(:acting_as_reflection) &&
               acting_as_reflection.is_a?(ActiveRecord::Reflection::AssociationReflection)
-            other.nil? || acting_as_reflection.name.to_s == other.to_s.underscore
+            case other
+            when Class
+              acting_as_reflection.class_name == other.to_s
+            when Symbol, String
+              acting_as_reflection.class_name.underscore == other.to_s
+            when NilClass
+              true
+            end
           else
             false
           end

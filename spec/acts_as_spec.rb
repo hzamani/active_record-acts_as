@@ -34,6 +34,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     it "returns true for supermodel class and name" do
       expect(pen.acting_as? :product).to be true
       expect(pen.acting_as? Product).to be true
+      expect(Inventory::PenLid.is_a? Inventory::ProductFeature).to be true
     end
 
     it "returns false for anything other than supermodel" do
@@ -47,6 +48,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(Pen.is_a? Product).to be true
       expect(Pen.is_a? Object).to be true
       expect(Pen.is_a? String).to be false
+      expect(Inventory::PenLid.is_a? Inventory::ProductFeature).to be true
     end
   end
 
