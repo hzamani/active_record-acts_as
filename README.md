@@ -66,7 +66,7 @@ end
 ```
 
 and add foreign key and type columns to products table as in a polymorphic relation.
-You may prefere using a migration:
+You may prefer using a migration:
 
 ```Ruby
 change_table :products do |t|
@@ -141,7 +141,7 @@ end
 `acts_as` support all `has_one` options, where defaults are there:
 `as: :actable, dependent: :destroy, validate: false, autosave: true`
 
-Make sure you know what you are doing when overwriting `validate` or `autodave` options.
+Make sure you know what you are doing when overwriting `validate` or `autosave` options.
 
 You can pass scope to `acts_as` as in `has_one`:
 
