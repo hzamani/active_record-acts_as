@@ -85,6 +85,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
   describe "#dup" do
     it "duplicates actable model as well" do
       p = pen.dup
+      expect(p).to be_a Pen
       expect(p.name).to eq('pen')
       expect(p.price).to eq(0.8)
     end

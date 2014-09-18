@@ -50,7 +50,9 @@ module ActiveRecord
       end
 
       def dup
-        super.acting_as = acting_as.dup
+        duplicate = super
+        duplicate.acting_as = acting_as.dup
+        duplicate
       end
 
       def method_missing(method, *args, &block)
