@@ -47,7 +47,7 @@ class Product < ActiveRecord::Base
 
   validates_presence_of :name, :price
 
-  def display
+  def info
     "#{name} $#{price}"
   end
 end
@@ -102,7 +102,7 @@ pen.valid?
   # => false
 pen.errors.full_messages
   # => ["Name can't be blank", "Price can't be blank", "Color can't be blank"]
-Pen.first.display
+Pen.first.info
   # => "Penie! $0.8"
 ```
 
