@@ -30,6 +30,13 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
   end
 
+  describe "#acting_as_reflection" do
+    it "returns an activerecord assosiation reflection" do
+      expect(Pen.acting_as_reflection).to_not be_nil
+      expect(Pen.acting_as_reflection).to be_a(ActiveRecord::Reflection::AssociationReflection)
+    end
+  end
+
   describe ".acting_as?" do
     it "returns true for supermodel class and name" do
       expect(pen.acting_as? :product).to be true

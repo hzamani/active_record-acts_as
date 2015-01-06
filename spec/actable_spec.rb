@@ -23,6 +23,13 @@ RSpec.describe "ActiveRecord::Base subclass with #actable" do
     end
   end
 
+  describe "#actable_reflection" do
+    it "returns an activerecord assosiation reflection" do
+      expect(Product.actable_reflection).to_not be_nil
+      expect(Product.actable_reflection).to be_a(ActiveRecord::Reflection::AssociationReflection)
+    end
+  end
+
   describe ".specific" do
     it "return specific submodel" do
       pen.save

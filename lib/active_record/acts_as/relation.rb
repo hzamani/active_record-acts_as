@@ -13,7 +13,7 @@ module ActiveRecord
           default_scope -> { eager_load(name) }
           validate :actable_must_be_valid
 
-          cattr_reader(:acting_as_reflection) { reflections[name.to_sym] }
+          cattr_reader(:acting_as_reflection) { reflections.stringify_keys[name.to_s] }
           cattr_reader(:acting_as_name) { name.to_s }
           cattr_reader(:acting_as_model) { (options[:class_name] || name.to_s.camelize).constantize }
           class_eval "def acting_as() #{name} || build_#{name} end"
@@ -47,7 +47,7 @@ module ActiveRecord
 
           reflections = belongs_to name, {polymorphic: true, dependent: :delete, autosave: true}.merge(options)
 
-          cattr_reader(:actable_reflection) { reflections[name] }
+          cattr_reader(:actable_reflection) { reflections.stringify_keys[name.to_s] }
 
           alias_method :specific, name
         end
