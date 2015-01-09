@@ -113,6 +113,13 @@ Product.first.specific
   # => #<Pen ...>
 ```
 
+If you have to come back to the parent object from the specific, the `acting_as` returns the parent element:
+
+```Ruby
+Pen.first.acting_as
+  # => #<Product ...>
+```
+
 In `has_many` case you can use subclasses:
 
 ```Ruby
