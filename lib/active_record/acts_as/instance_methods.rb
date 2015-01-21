@@ -10,10 +10,18 @@ module ActiveRecord
         super || acting_as?(klass)
       end
 
+      # Is the superclass persisted to the database?
+      def acting_as_persisted?
+        return false if acting_as.nil?
+        !acting_as.id.nil? && !acting_as.actable_id.nil?
+      end
+
       def actable_must_be_valid
-        unless acting_as.valid?
-          acting_as.errors.each do |att, message|
-            errors.add(att, message)
+        if validates_actable
+          unless acting_as.valid?
+            acting_as.errors.each do |att, message|
+              errors.add(att, message)
+            end
           end
         end
       end
@@ -37,16 +45,20 @@ module ActiveRecord
       private :write_attribute
 
       def attributes
-        acting_as.attributes.except(acting_as_reflection.type, acting_as_reflection.foreign_key).merge(super)
+        acting_as_persisted? ? acting_as.attributes.except(acting_as_reflection.type, acting_as_reflection.foreign_key).merge(super) : super
       end
 
       def attribute_names
-        super | (acting_as.attribute_names - [acting_as_reflection.type, acting_as_reflection.foreign_key])
+        acting_as_persisted? ? super | (acting_as.attribute_names - [acting_as_reflection.type, acting_as_reflection.foreign_key]) : super
       end
 
 
-      def respond_to?(name, include_private = false)
-        super || acting_as.respond_to?(name)
+      def respond_to?(name, include_private = false, as_original_class = false)
+        as_original_class ? super(name, include_private) : super(name, include_private) || acting_as.respond_to?(name)
+      end
+
+      def self_respond_to?(name, include_private = false)
+        respond_to? name, include_private, true
       end
 
       def dup
@@ -56,10 +68,26 @@ module ActiveRecord
       end
 
       def method_missing(method, *args, &block)
+        uses_superclass_for?(method) ? acting_as.send(method, *args, &block) : super
+      end
+
+      def uses_superclass_for?(method)
+        responds_locally = self_respond_to?(method)
         if acting_as.respond_to?(method)
-          acting_as.send(method, *args, &block)
+          if responds_locally
+            false
+          else
+            # Only use getters if the superclass has
+            # an instance that is linked to this class instance.
+            if acting_as_persisted?
+              true
+            else
+              responds_locally ? false : true
+            end
+          end
         else
-          super
+          # If the superclass doesn't have it, use this class's methods
+          false
         end
       end
     end

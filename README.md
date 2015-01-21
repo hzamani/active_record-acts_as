@@ -57,7 +57,9 @@ class Pen < ActiveRecord::Base
 end
 
 class Book < ActiveRecord::Base
-  acts_as :product
+  # In case you don't wish to validate
+  # this model against Product
+  acts_as :product, validates_actable: false
 end
 
 class Store < ActiveRecord::Base

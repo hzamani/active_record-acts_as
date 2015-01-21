@@ -21,6 +21,13 @@ class Pen < ActiveRecord::Base
   validates_presence_of :color
 end
 
+class IsolatedPen < ActiveRecord::Base
+  self.table_name = :pens
+  acts_as :product, validates_actable: false
+
+  validates_presence_of :color
+end
+
 class Store < ActiveRecord::Base
   has_many :products
 end

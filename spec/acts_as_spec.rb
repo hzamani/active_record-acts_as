@@ -5,7 +5,9 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
 
   let(:pen_attributes) { {name: 'pen', price: 0.8, color: 'red'} }
   let(:pen) { Pen.new pen_attributes }
+  let(:isolated_pen) { IsolatedPen.new color: 'red' }
   let(:store) { Store.new name: 'biggerman' }
+  let(:product) { Product.new store: store }
 
   it "has a has_one relation" do
     association = subject.reflect_on_all_associations.find { |r| r.name == :product }
@@ -129,16 +131,25 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect { Product.find(product_id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
-    it "validates supermodel attribures upon validation" do
-      p = Pen.new
-      expect(p).to be_invalid
-      expect(p.errors.keys).to include(:name, :price, :color)
-      p.name = 'testing'
-      expect(p).to be_invalid
-      p.color = 'red'
-      expect(p).to be_invalid
-      p.price = 0.8
-      expect(p).to be_valid
+    context "validates supermodel attributes" do
+      it "upon validate" do
+        p = Pen.new
+        expect(p).to be_invalid
+        expect(p.errors.keys).to include(:name, :price, :color)
+        p.name = 'testing'
+        expect(p).to be_invalid
+        p.color = 'red'
+        expect(p).to be_invalid
+        p.price = 0.8
+        expect(p).to be_valid
+      end
+      it "unless validates_actable is set to false" do
+        p = IsolatedPen.new
+        expect(p).to be_invalid
+        expect(p.errors.keys).to include(:color)
+        p.color = 'red'
+        expect(p).to be_valid
+      end
     end
 
     it "can set assosications defined in supermodel" do
@@ -156,12 +167,26 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(pen.store).to eq(store)
     end
 
-    it "includes supermodel attributes in .to_json responce" do
-      expect(pen.to_json).to eq('{"id":null,"name":"pen","price":0.8,"store_id":null,"color":"red"}')
+    context "includes supermodel attributes in .to_json response" do
+      it "unless the submodel instance association doesn't exist" do
+        expect(JSON.parse(isolated_pen.to_json)).to eq(JSON.parse('{"id":null,"color":"red"}'))
+      end
+      it "if the submodel instance association exists" do
+        p = Product.new(name: 'Test Pen', price: 0.8, actable: pen)
+        p.save
+        expect(JSON.parse(pen.to_json)).to eq(JSON.parse('{"id":' + pen.id.to_s + ',"name":"pen","price":0.8,"store_id":null,"color":"red"}'))
+      end
     end
 
-    it "includes supermodel attribute names in .attribute_names responce" do
-      expect(pen.attribute_names).to include("id", "color", "name", "price", "store_id")
+    context "includes supermodel attribute names in .attribute_names response" do
+      it "unless the submodel instance association doesn't exist" do
+        expect(pen.attribute_names).to include("id", "color")
+      end
+      it "if the submodel instance association exists" do
+        p = Product.new(name: 'Test Pen', price: 0.8, actable: pen)
+        p.save
+        expect(pen.attribute_names).to include("id", "color", "name", "price", "store_id")
+      end
     end
   end
 

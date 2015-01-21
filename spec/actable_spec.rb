@@ -31,9 +31,14 @@ RSpec.describe "ActiveRecord::Base subclass with #actable" do
   end
 
   describe ".specific" do
-    it "return specific submodel" do
-      pen.save
-      expect(Product.find(pen.acting_as.id).specific).to eq(pen)
+    context "returns specific submodel" do
+      it "unless the submodel instance association doesn't exist" do
+        expect(subject.new.specific).to be_nil
+      end
+      it "if the submodel instance association exists" do
+        pen.save
+        expect(Product.find(pen.acting_as.id).specific).to eq(pen)
+      end
     end
   end
 

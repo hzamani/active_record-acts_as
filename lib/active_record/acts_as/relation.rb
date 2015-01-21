@@ -9,6 +9,8 @@ module ActiveRecord
           options, scope = scope, nil if Hash === scope
           options = {as: :actable, dependent: :destroy, validate: false, autosave: true}.merge options
 
+          cattr_reader(:validates_actable) { options.delete(:validates_actable) == false ? false : true }
+
           reflections = has_one name, scope, options
           default_scope -> { eager_load(name) }
           validate :actable_must_be_valid
