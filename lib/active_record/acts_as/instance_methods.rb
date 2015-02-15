@@ -10,10 +10,14 @@ module ActiveRecord
         super || acting_as?(klass)
       end
 
+      def acting_as_foreign_key
+        acting_as[acting_as_reflection.foreign_key]
+      end
+
       # Is the superclass persisted to the database?
       def acting_as_persisted?
         return false if acting_as.nil?
-        !acting_as.id.nil? && !acting_as.actable_id.nil?
+        !acting_as.id.nil? && !acting_as_foreign_key.nil?
       end
 
       def actable_must_be_valid
