@@ -123,6 +123,33 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(pen.present).to eq("pen - $0.8")
     end
 
+    it 'responds to serialized attribute' do
+      expect(pen).to respond_to('option1')
+      expect(isolated_pen).to respond_to('option2')
+    end
+
+    it 'responds to supermodel serialized attribute' do
+      expect(pen).to respond_to('global_option')
+      expect(isolated_pen).to respond_to('global_option')
+    end
+
+    it 'does not respond to other models serialized attribute' do
+      expect(pen).to_not respond_to('option2')
+      expect(isolated_pen).to_not respond_to('option1')
+    end
+
+    it 'saves supermodel serialized attribute on save' do
+      pen.option1 = 'value1'
+      pen.global_option = 'globalvalue'
+      pen.save
+      pen.reload
+      isolated_pen.save
+      isolated_pen.reload
+      expect(pen.option1).to eq('value1')
+      expect(isolated_pen).to_not respond_to('option1')
+      expect(JSON.parse(pen.to_json)).to eq(JSON.parse('{"id":' + pen.id.to_s + ',"name":"pen","price":0.8,"store_id":null,"settings":{"global_option":"globalvalue","option1":"value1"},"color":"red"}'))
+    end
+
     it "saves supermodel attributes on save" do
       pen.save
       pen.reload
@@ -185,7 +212,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       it "if the submodel instance association exists" do
         p = Product.new(name: 'Test Pen', price: 0.8, actable: pen)
         p.save
-        expect(JSON.parse(pen.to_json)).to eq(JSON.parse('{"id":' + pen.id.to_s + ',"name":"pen","price":0.8,"store_id":null,"color":"red"}'))
+        expect(JSON.parse(pen.to_json)).to eq(JSON.parse('{"id":' + pen.id.to_s + ',"name":"pen","price":0.8,"store_id":null,"settings": {},"color":"red"}'))
       end
     end
 

@@ -46,7 +46,23 @@ module ActiveRecord
           acting_as.send(:write_attribute, attr_name, value, *args, &block)
         end
       end
-      private :write_attribute
+
+      def read_store_attribute(store_attribute, key)
+        if attribute_method?(store_attribute.to_s)
+          super
+        else
+          acting_as.read_store_attribute(store_attribute, key)
+        end
+      end
+
+      def write_store_attribute(store_attribute, key, value)
+        if attribute_method?(store_attribute.to_s)
+          super
+        else
+          acting_as.send(:write_store_attribute, store_attribute, key, value)
+        end
+      end
+      private :write_attribute, :write_store_attribute
 
       def attributes
         acting_as_persisted? ? acting_as.attributes.except(acting_as_reflection.type, acting_as_reflection.foreign_key).merge(super) : super
