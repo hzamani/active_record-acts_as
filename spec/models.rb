@@ -5,6 +5,7 @@ class Product < ActiveRecord::Base
   actable
   belongs_to :store
   validates_presence_of :name, :price
+  store :settings, accessors: [:global_option]
 
   def present
     "#{name} - $#{price}"
@@ -17,6 +18,7 @@ end
 
 class Pen < ActiveRecord::Base
   acts_as :product
+  store_accessor :settings, :option1
 
   validates_presence_of :color
 end
@@ -24,6 +26,7 @@ end
 class IsolatedPen < ActiveRecord::Base
   self.table_name = :pens
   acts_as :product, validates_actable: false
+  store_accessor :settings, :option2
 
   validates_presence_of :color
 end
@@ -60,6 +63,7 @@ initialize_database do
     t.string :name
     t.float :price
     t.integer :store_id
+    t.text :settings
     t.actable
   end
 
