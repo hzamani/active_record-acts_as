@@ -44,6 +44,7 @@ Back to example above, all you have to do is to mark `Product` as `actable` and 
 ```Ruby
 class Product < ActiveRecord::Base
   actable
+  belongs_to :store
 
   validates_presence_of :name, :price
 
