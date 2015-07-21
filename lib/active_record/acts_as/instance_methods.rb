@@ -72,6 +72,22 @@ module ActiveRecord
         acting_as_persisted? ? super | (acting_as.attribute_names - [acting_as_reflection.type, acting_as_reflection.foreign_key]) : super
       end
 
+      def has_attribute?(attr_name, as_original_class = false)
+        if as_original_class
+          super(attr_name)
+        else
+          super(attr_name) || acting_as.has_attribute?(attr_name)
+        end
+      end
+
+      def column_for_attribute(name)
+        if has_attribute?(name, true)
+          super(name)
+        else
+          acting_as.column_for_attribute(name)
+        end
+      end
+
 
       def respond_to?(name, include_private = false, as_original_class = false)
         as_original_class ? super(name, include_private) : super(name, include_private) || acting_as.respond_to?(name)

@@ -22,6 +22,9 @@ module ActiveRecord
           alias_method :acting_as=, "#{name}=".to_sym
 
           include ActsAs::InstanceMethods
+          singleton_class.module_eval do
+            include ActsAs::ClassMethods
+          end
         end
 
         def acting_as?(other = nil)

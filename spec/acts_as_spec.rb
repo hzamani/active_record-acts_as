@@ -111,6 +111,40 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
   end
 
+  describe "#has_attribute?" do
+    context "when the attribute is defined on the superclass" do
+      it "queries the superclass" do
+        expect(pen.has_attribute?(:name)).to be_truthy
+      end
+    end
+
+    context "when the attribute is defined on the subclass" do
+      it "queries the subclass" do
+        expect(pen.has_attribute?(:color)).to be_truthy
+      end
+    end
+  end
+
+  describe "#column_for_attribute" do
+    context "when the attribute is defined on the superclass" do
+      it "queries the superclass" do
+        expect(pen.column_for_attribute(:name)).to eq(pen.product.column_for_attribute(:name))
+      end
+    end
+
+    context "when the attribute is defined on the subclass" do
+      it "queries the subclass" do
+        expect(pen.column_for_attribute(:color)).not_to be_nil
+      end
+    end
+  end
+
+  describe "._reflections" do
+    it "merges the reflections on both superclass and subclass" do
+      expect(Pen._reflections.length).to eq(Product._reflections.length + 1)
+    end
+  end
+
   it "have supermodel attributes accessible on creation" do
     expect{Pen.create(pen_attributes)}.to_not raise_error
   end
