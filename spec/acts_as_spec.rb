@@ -139,6 +139,13 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
   end
 
+  describe ".validators_on" do
+    it "merges the validations on both superclass and subclass" do
+      expect(Pen.validators_on(:name, :price)).to contain_exactly(
+        *Product.validators_on(:name, :price))
+    end
+  end
+
   describe "._reflections" do
     it "merges the reflections on both superclass and subclass" do
       expect(Pen._reflections.length).to eq(Product._reflections.length + 1)
