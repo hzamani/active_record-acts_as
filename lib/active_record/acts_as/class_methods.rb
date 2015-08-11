@@ -9,6 +9,10 @@ module ActiveRecord
         @_reflections_acts_as_cache ||=
           _reflections_without_acts_as.reverse_merge(acting_as_model._reflections)
       end
+
+      def validators_on(*args)
+        super + acting_as_model.validators_on(*args)
+      end
     end
   end
 end
