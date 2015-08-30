@@ -12,7 +12,7 @@ module ActiveRecord
           cattr_reader(:validates_actable) { options.delete(:validates_actable) == false ? false : true }
 
           reflections = has_one name, scope, options
-          default_scope -> { eager_load(name) }
+          default_scope -> { includes(name) }
           validate :actable_must_be_valid
 
           cattr_reader(:acting_as_reflection) { reflections.stringify_keys[name.to_s] }
