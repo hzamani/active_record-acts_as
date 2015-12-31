@@ -26,5 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10"
 
   spec.add_dependency "activesupport", "~> 4"
-  spec.add_dependency "activerecord", "~> 4", ">= 4.1.2", "~> 5.0.0.beta1"
+  spec.add_dependency "activerecord", "~> 4", ">= 4.1.2", "= 5.0.0.beta1"
 end
