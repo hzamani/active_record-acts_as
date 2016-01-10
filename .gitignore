@@ -3,6 +3,7 @@
 .bundle
 .config
 .yardoc
+.rubocop.yml
 Gemfile.lock
 InstalledFiles
 _yardoc

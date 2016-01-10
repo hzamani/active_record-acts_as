@@ -3,9 +3,15 @@ require 'active_record'
 require 'active_record/acts_as/version'
 require 'active_record/acts_as/relation'
 require 'active_record/acts_as/migration'
-require 'active_record/acts_as/class_methods'
 require 'active_record/acts_as/instance_methods'
-require 'active_record/acts_as/querying'
+
+if ActiveRecord::VERSION::MAJOR >= 5
+  require 'active_record/acts_as/experimental/class_methods'
+  require 'active_record/acts_as/experimental/querying'
+else
+  require 'active_record/acts_as/class_methods'
+  require 'active_record/acts_as/querying'
+end
 
 module ActiveRecord
   class Base
@@ -24,4 +30,3 @@ module ActiveRecord
     end
   end
 end
-
