@@ -21,14 +21,13 @@ module ActiveRecord
       end
 
       def actable_must_be_valid
-        if validates_actable
-          unless acting_as.valid?
-            acting_as.errors.each do |att, message|
-              errors.add(att, message)
-            end
-          end
+        return unless validates_actable
+        acting_as.valid?
+        acting_as.errors.each do |att, message|
+          errors.add(att, message)
         end
       end
+
       protected :actable_must_be_valid
 
       def read_attribute(attr_name, *args, &block)
@@ -62,14 +61,25 @@ module ActiveRecord
           acting_as.send(:write_store_attribute, store_attribute, key, value)
         end
       end
+
       private :write_attribute, :write_store_attribute
 
       def attributes
-        acting_as_persisted? ? acting_as.attributes.except(acting_as_reflection.type, acting_as_reflection.foreign_key).merge(super) : super
+        if acting_as_persisted?
+          acting_as.attributes
+            .except(acting_as_reflection.type, acting_as_reflection.foreign_key)
+            .merge(super)
+        else
+          super
+        end
       end
 
       def attribute_names
-        acting_as_persisted? ? super | (acting_as.attribute_names - [acting_as_reflection.type, acting_as_reflection.foreign_key]) : super
+        if acting_as_persisted?
+          super | (acting_as.attribute_names - [acting_as_reflection.type, acting_as_reflection.foreign_key])
+        else
+          super
+        end
       end
 
       def has_attribute?(attr_name, as_original_class = false)
@@ -88,9 +98,12 @@ module ActiveRecord
         end
       end
 
-
       def respond_to?(name, include_private = false, as_original_class = false)
-        as_original_class ? super(name, include_private) : super(name, include_private) || acting_as.respond_to?(name)
+        if as_original_class
+          super(name, include_private)
+        else
+          super(name, include_private) || acting_as.respond_to?(name)
+        end
       end
 
       def self_respond_to?(name, include_private = false)
