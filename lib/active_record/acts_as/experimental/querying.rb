@@ -33,4 +33,10 @@ module ActiveRecord
       prepend WhereWithActAs
     end
   end
+
+  class Relation
+
+    prepend ScopeForCreateWithActAs
+    include ActsAs::QueryMethods
+  end
 end

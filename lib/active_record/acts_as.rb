@@ -18,11 +18,6 @@ module ActiveRecord
     include ActsAs::Relation
   end
 
-  class Relation
-    prepend ScopeForCreateWithActAs
-    include ActsAs::QueryMethods
-  end
-
   module ConnectionAdapters
     class TableDefinition
       include ActsAs::Migration::TableDefinition
