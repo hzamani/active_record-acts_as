@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency 'activesupport', '>= 4', '<= 5.0.0.beta1'
     spec.add_dependency 'activerecord', '>= 4.1.2', '<= 5.0.0.beta1'
   else
-    spec.add_dependency 'activesupport', '~ 4'
-    spec.add_dependency 'activerecord', '~ 4', '~> 4.1.2'
+    spec.add_dependency 'activesupport', '~> 4'
+    spec.add_dependency 'activerecord', '~> 4', '~> 4.1.2'
   end
 end
