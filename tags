@@ -1,0 +1,78 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ActiveRecord	lib/active_record/acts_as.rb	/^module ActiveRecord$/;"	m
+ActiveRecord	lib/active_record/acts_as/class_methods.rb	/^module ActiveRecord$/;"	m
+ActiveRecord	lib/active_record/acts_as/experimental/class_methods.rb	/^module ActiveRecord$/;"	m
+ActiveRecord	lib/active_record/acts_as/experimental/querying.rb	/^module ActiveRecord$/;"	m
+ActiveRecord	lib/active_record/acts_as/instance_methods.rb	/^module ActiveRecord$/;"	m
+ActiveRecord	lib/active_record/acts_as/migration.rb	/^module ActiveRecord$/;"	m
+ActiveRecord	lib/active_record/acts_as/querying.rb	/^module ActiveRecord$/;"	m
+ActiveRecord	lib/active_record/acts_as/relation.rb	/^module ActiveRecord$/;"	m
+ActiveRecord	lib/active_record/acts_as/version.rb	/^module ActiveRecord$/;"	m
+ActsAs	lib/active_record/acts_as/class_methods.rb	/^  module ActsAs$/;"	m	class:ActiveRecord
+ActsAs	lib/active_record/acts_as/experimental/class_methods.rb	/^  module ActsAs$/;"	m	class:ActiveRecord
+ActsAs	lib/active_record/acts_as/experimental/querying.rb	/^  module ActsAs$/;"	m	class:ActiveRecord
+ActsAs	lib/active_record/acts_as/instance_methods.rb	/^  module ActsAs$/;"	m	class:ActiveRecord
+ActsAs	lib/active_record/acts_as/migration.rb	/^  module ActsAs$/;"	m	class:ActiveRecord
+ActsAs	lib/active_record/acts_as/relation.rb	/^  module ActsAs$/;"	m	class:ActiveRecord
+ActsAs	lib/active_record/acts_as/version.rb	/^  module ActsAs$/;"	m	class:ActiveRecord
+Base	lib/active_record/acts_as.rb	/^  class Base$/;"	c	class:ActiveRecord
+ClassMethods	lib/active_record/acts_as/class_methods.rb	/^    module ClassMethods$/;"	m	class:ActiveRecord.ActsAs
+ClassMethods	lib/active_record/acts_as/experimental/class_methods.rb	/^    module ClassMethods$/;"	m	class:ActiveRecord.ActsAs
+ClassMethods	lib/active_record/acts_as/relation.rb	/^      module ClassMethods$/;"	m	class:ActiveRecord.ActsAs.Relation
+ConnectionAdapters	lib/active_record/acts_as.rb	/^  module ConnectionAdapters$/;"	m	class:ActiveRecord
+InstanceMethods	lib/active_record/acts_as/instance_methods.rb	/^    module InstanceMethods$/;"	m	class:ActiveRecord.ActsAs
+Migration	lib/active_record/acts_as/migration.rb	/^    module Migration$/;"	m	class:ActiveRecord.ActsAs
+QueryMethods	lib/active_record/acts_as/experimental/querying.rb	/^    module QueryMethods$/;"	m	class:ActiveRecord.ActsAs
+QueryMethods	lib/active_record/acts_as/querying.rb	/^  module QueryMethods$/;"	m	class:ActiveRecord
+ReflectionsWithActAs	lib/active_record/acts_as/experimental/class_methods.rb	/^    module ReflectionsWithActAs$/;"	m	class:ActiveRecord.ActsAs
+Relation	lib/active_record/acts_as/experimental/querying.rb	/^  class Relation$/;"	c	class:ActiveRecord
+Relation	lib/active_record/acts_as/querying.rb	/^  class Relation$/;"	c	class:ActiveRecord
+Relation	lib/active_record/acts_as/relation.rb	/^    module Relation$/;"	m	class:ActiveRecord.ActsAs
+ScopeForCreateWithActAs	lib/active_record/acts_as/experimental/querying.rb	/^  module ScopeForCreateWithActAs$/;"	m	class:ActiveRecord
+Table	lib/active_record/acts_as.rb	/^    class Table$/;"	c	class:ActiveRecord.ConnectionAdapters
+Table	lib/active_record/acts_as/migration.rb	/^      module Table$/;"	m	class:ActiveRecord.ActsAs.Migration
+TableDefinition	lib/active_record/acts_as.rb	/^    class TableDefinition$/;"	c	class:ActiveRecord.ConnectionAdapters
+TableDefinition	lib/active_record/acts_as/migration.rb	/^      module TableDefinition$/;"	m	class:ActiveRecord.ActsAs.Migration
+WhereWithActAs	lib/active_record/acts_as/experimental/querying.rb	/^  module WhereWithActAs$/;"	m	class:ActiveRecord
+_reflect_on_association	lib/active_record/acts_as/experimental/class_methods.rb	/^      def _reflect_on_association(table_name)$/;"	f	class:ActiveRecord.ActsAs.ReflectionsWithActAs
+_reflections	lib/active_record/acts_as/experimental/class_methods.rb	/^      def _reflections$/;"	f	class:ActiveRecord.ActsAs.ReflectionsWithActAs
+_reflections_with_acts_as	lib/active_record/acts_as/class_methods.rb	/^      def _reflections_with_acts_as$/;"	f	class:ActiveRecord.ActsAs.ClassMethods
+actable	lib/active_record/acts_as/migration.rb	/^        def actable(options = {})$/;"	f	class:ActiveRecord.ActsAs.Migration.TableDefinition
+actable	lib/active_record/acts_as/relation.rb	/^        def actable(options = {})$/;"	f	class:ActiveRecord.ActsAs.Relation.ClassMethods
+actable?	lib/active_record/acts_as/relation.rb	/^        def actable?$/;"	f	class:ActiveRecord.ActsAs.Relation.ClassMethods
+actable_must_be_valid	lib/active_record/acts_as/instance_methods.rb	/^      def actable_must_be_valid$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+acting_as?	lib/active_record/acts_as/instance_methods.rb	/^      def acting_as?(other = nil)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+acting_as?	lib/active_record/acts_as/relation.rb	/^        def acting_as?(other = nil)$/;"	f	class:ActiveRecord.ActsAs.Relation.ClassMethods
+acting_as_foreign_key	lib/active_record/acts_as/instance_methods.rb	/^      def acting_as_foreign_key$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+acting_as_persisted?	lib/active_record/acts_as/instance_methods.rb	/^      def acting_as_persisted?$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+acts_as	lib/active_record/acts_as/relation.rb	/^        def acts_as(name, scope = nil, options = {})$/;"	f	class:ActiveRecord.ActsAs.Relation.ClassMethods
+attribute_names	lib/active_record/acts_as/instance_methods.rb	/^      def attribute_names$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+attributes	lib/active_record/acts_as/instance_methods.rb	/^      def attributes$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+clear_reflections_cache	lib/active_record/acts_as/experimental/class_methods.rb	/^      def clear_reflections_cache$/;"	f	class:ActiveRecord.ActsAs.ReflectionsWithActAs
+column_for_attribute	lib/active_record/acts_as/instance_methods.rb	/^      def column_for_attribute(name)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+dup	lib/active_record/acts_as/instance_methods.rb	/^      def dup$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+has_attribute?	lib/active_record/acts_as/instance_methods.rb	/^      def has_attribute?(attr_name, as_original_class = false)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+included	lib/active_record/acts_as/class_methods.rb	/^      def self.included(module_)$/;"	F	class:ActiveRecord.ActsAs.ClassMethods
+included	lib/active_record/acts_as/experimental/class_methods.rb	/^      def self.included(mod)$/;"	F	class:ActiveRecord.ActsAs.ClassMethods
+is_a?	lib/active_record/acts_as/instance_methods.rb	/^      def is_a?(klass)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+is_a?	lib/active_record/acts_as/relation.rb	/^        def is_a?(klass)$/;"	f	class:ActiveRecord.ActsAs.Relation.ClassMethods
+method_missing	lib/active_record/acts_as/instance_methods.rb	/^      def method_missing(method, *args, &block)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+read_attribute	lib/active_record/acts_as/instance_methods.rb	/^      def read_attribute(attr_name, *args, &block)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+read_store_attribute	lib/active_record/acts_as/instance_methods.rb	/^      def read_store_attribute(store_attribute, key)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+remove_actable	lib/active_record/acts_as/migration.rb	/^        def remove_actable(options = {})$/;"	f	class:ActiveRecord.ActsAs.Migration.Table
+respond_to?	lib/active_record/acts_as/instance_methods.rb	/^      def respond_to?(name, include_private = false, as_original_class = false)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+scope_for_create	lib/active_record/acts_as/experimental/querying.rb	/^    def scope_for_create$/;"	f	class:ActiveRecord.ScopeForCreateWithActAs
+scope_for_create_with_acts_as	lib/active_record/acts_as/querying.rb	/^    def scope_for_create_with_acts_as$/;"	f	class:ActiveRecord.Relation
+self_respond_to?	lib/active_record/acts_as/instance_methods.rb	/^      def self_respond_to?(name, include_private = false)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+uses_superclass_for?	lib/active_record/acts_as/instance_methods.rb	/^      def uses_superclass_for?(method)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+validators_on	lib/active_record/acts_as/class_methods.rb	/^      def validators_on(*args)$/;"	f	class:ActiveRecord.ActsAs.ClassMethods
+validators_on	lib/active_record/acts_as/experimental/class_methods.rb	/^      def validators_on(*args)$/;"	f	class:ActiveRecord.ActsAs.ClassMethods
+where	lib/active_record/acts_as/experimental/querying.rb	/^    def where(opts = :chain, *rest)$/;"	f	class:ActiveRecord.WhereWithActAs
+where_with_acts_as	lib/active_record/acts_as/querying.rb	/^    def where_with_acts_as(opts = :chain, *rest)$/;"	f	class:ActiveRecord.QueryMethods
+write_attribute	lib/active_record/acts_as/instance_methods.rb	/^      def write_attribute(attr_name, value, *args, &block)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods
+write_store_attribute	lib/active_record/acts_as/instance_methods.rb	/^      def write_store_attribute(store_attribute, key, value)$/;"	f	class:ActiveRecord.ActsAs.InstanceMethods

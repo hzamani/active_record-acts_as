@@ -26,7 +26,7 @@ module ActiveRecord
           reflections = has_one name, scope, options
           validate :actable_must_be_valid
 
-          cattr_reader(:acting_as_reflection) { reflections[name.to_s] }
+          cattr_reader(:acting_as_reflection) { reflections.stringify_keys[name.to_s] }
           cattr_reader(:acting_as_name) { name.to_s }
           cattr_reader(:acting_as_model) do
             (options[:class_name] || name.to_s.camelize).constantize
@@ -71,7 +71,7 @@ module ActiveRecord
             autosave: true
           }.merge(options)
 
-          cattr_reader(:actable_reflection) { reflections[name.to_s] }
+          cattr_reader(:actable_reflection) { reflections.stringify_keys[name.to_s] }
 
           alias_method :specific, name
         end
