@@ -16,6 +16,10 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     expect(association.options).to have_key(:as)
   end
 
+  it "autobuilds the has_one relation" do
+    expect(subject.new.product).not_to be_nil
+  end
+
   it "has a cattr_reader for the acting_as_model" do
     expect(subject.acting_as_model).to eq Product
   end
