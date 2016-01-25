@@ -64,6 +64,7 @@ initialize_database do
     t.float :price
     t.integer :store_id
     t.text :settings
+    t.timestamps null: true
     t.actable
   end
 

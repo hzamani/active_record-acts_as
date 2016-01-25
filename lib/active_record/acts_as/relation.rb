@@ -14,6 +14,7 @@ module ActiveRecord
           reflections = has_one name, scope, options
           default_scope -> { includes(name) }
           validate :actable_must_be_valid
+          after_update :touch_actable
 
           cattr_reader(:acting_as_reflection) { reflections.stringify_keys[name.to_s] }
           cattr_reader(:acting_as_name) { name.to_s }

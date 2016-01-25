@@ -192,7 +192,18 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       isolated_pen.reload
       expect(pen.option1).to eq('value1')
       expect(isolated_pen).to_not respond_to('option1')
-      expect(JSON.parse(pen.to_json)).to eq(JSON.parse('{"id":' + pen.id.to_s + ',"name":"pen","price":0.8,"store_id":null,"settings":{"global_option":"globalvalue","option1":"value1"},"color":"red"}'))
+      expect(JSON.parse(pen.to_json)).to eq(JSON.parse('''
+        {
+          "id": '+ pen.id.to_s + ',
+          "name": "pen",
+          "price": 0.8,
+          "store_id": null,
+          "settings": {"global_option":"globalvalue", "option1":"value1"},
+          "color": "red",
+          "created_at": ' + pen.created_at.to_json + ',
+          "updated_at": ' + pen.updated_at.to_json + '
+        }
+      '''))
     end
 
     it "saves supermodel attributes on save" do
@@ -201,6 +212,15 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(pen.name).to eq('pen')
       expect(pen.price).to eq(0.8)
       expect(pen.color).to eq('red')
+    end
+
+    it "touches supermodel on save" do
+      pen.save
+      pen.reload
+      update = pen.product.updated_at
+      pen.color = "gray"
+      pen.save
+      expect(pen.updated_at).not_to eq(update)
     end
 
     it "raises NoMethodEror on unexisting method call" do
@@ -254,10 +274,22 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       it "unless the submodel instance association doesn't exist" do
         expect(JSON.parse(isolated_pen.to_json)).to eq(JSON.parse('{"id":null,"color":"red"}'))
       end
+
       it "if the submodel instance association exists" do
         p = Product.new(name: 'Test Pen', price: 0.8, actable: pen)
         p.save
-        expect(JSON.parse(pen.to_json)).to eq(JSON.parse('{"id":' + pen.id.to_s + ',"name":"pen","price":0.8,"store_id":null,"settings": {},"color":"red"}'))
+        expect(JSON.parse(pen.to_json)).to eq(JSON.parse('''
+          {
+            "id": '+ pen.id.to_s + ',
+            "name": "pen",
+            "price": 0.8,
+            "store_id": null,
+            "settings": {},
+            "color": "red",
+            "created_at": ' + pen.created_at.to_json + ',
+            "updated_at": ' + pen.updated_at.to_json + '
+          }
+        '''))
       end
     end
 
