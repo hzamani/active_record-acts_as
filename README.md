@@ -86,8 +86,13 @@ change_table :products do |t|
 end
 ```
 
-Now `Pen` and `Book` *acts as* `Product`, i.e. they inherit `Product`s *attributes*,
-*methods* and *validations*. Now you can do things like these:
+**Make sure** that column names do not match on parent and subclass tables,
+that will make SQL statements ambiguous and invalid!
+Specially **DO NOT** use timestamps on subclasses, if you need them define them
+on parent table and they will be touched after submodel updates.
+
+Now `Pen` and `Book` **acts as** `Product`, i.e. they inherit `Product`s **attributes**,
+**methods** and **validations**. Now you can do things like these:
 
 ```Ruby
 Pen.create name: 'Penie!', price: 0.8, color: 'red'
