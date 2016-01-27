@@ -8,6 +8,7 @@ end
 
 RSpec.describe ".actable" do
   context "in .create_table block" do
+    after { initialize_schema }
     context "with :as options" do
       it "creates plymorphic reference columns with given name" do
         initialize_database { create_table(:products) { |t| t.actable(as: :produceable) } }

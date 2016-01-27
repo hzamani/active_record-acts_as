@@ -183,7 +183,7 @@ To use this library custom RSpec matchers, you must require the `rspec/acts_as_m
 Examples:
 
 ```Ruby
-require "rspec/acts_as_matchers"
+require "active_record/acts_as/matchers"
 
 RSpec.describe "Pen acts like a Product" do
   it { is_expected.to act_as(:product) }
