@@ -7,12 +7,22 @@ module ActiveRecord
       module ClassMethods
         def acts_as(name, scope = nil, options = {})
           options, scope = scope, nil if Hash === scope
+          association_method = options.delete(:association_method)
           options = {as: :actable, dependent: :destroy, validate: false, autosave: true}.merge options
 
           cattr_reader(:validates_actable) { options.delete(:validates_actable) == false ? false : true }
 
           reflections = has_one name, scope, options
-          default_scope -> { includes(name) }
+          default_scope -> {
+            case association_method
+              when :eager_load
+                eager_load(name)
+              when :joins
+                joins(name)
+              else
+                includes(name)
+            end
+          }
           validate :actable_must_be_valid
           after_update :touch_actable
 
