@@ -16,7 +16,7 @@ module ActiveRecord
         def remove_actable(options = {})
           name = options.delete(:as) || :actable
           options[:polymorphic] = true
-          @base.remove_reference(@table_name, name, options)
+          @base.remove_reference(@name, name, options)
         end
       end
     end
