@@ -349,4 +349,54 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(subject.acting_as_model).to eq Inventory::ProductFeature
     end
   end
+
+  context 'different association_methods' do
+    before(:each) do
+      Object.send(:remove_const, :Pen)
+    end
+
+    it "should not include the selected attribute when associating using 'eager_load'" do
+      class Pen < ActiveRecord::Base
+        acts_as :product , {association_method: :eager_load}
+        store_accessor :settings, :option1
+        validates_presence_of :color
+      end
+      Pen.create pen_attributes
+
+      expect(Pen.select("'something' as thing").first['thing']).to be_nil
+    end
+
+    it "should include the selected attribute in the model when associating using 'includes'" do
+      class Pen < ActiveRecord::Base
+        acts_as :product , {association_method: :includes}
+        store_accessor :settings, :option1
+        validates_presence_of :color
+      end
+      Pen.create pen_attributes
+
+      expect(Pen.select("'something' as thing").first['thing']).to eq 'something'
+    end
+
+    it "should include the selected attribute in the model not specifying an association_method" do
+      class Pen < ActiveRecord::Base
+        acts_as :product
+        store_accessor :settings, :option1
+        validates_presence_of :color
+      end
+      Pen.create pen_attributes
+
+      expect(Pen.select("'something' as thing").first['thing']).to eq 'something'
+    end
+
+    it "should include a selected attribute from the parent when associating using 'joins'" do
+      class Pen < ActiveRecord::Base
+        acts_as :product, {association_method: :joins}
+        store_accessor :settings, :option1
+        validates_presence_of :color
+      end
+      Pen.create pen_attributes
+
+      expect(Pen.select("price as thing").first['thing']).to eq 0.8
+    end
+  end
 end
