@@ -21,6 +21,7 @@ module ActiveRecord
       end
 
       def touch_actable
+        return unless changed?
         acting_as.touch
       end
 
