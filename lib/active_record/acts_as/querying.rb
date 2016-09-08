@@ -3,6 +3,8 @@ module ActiveRecord
     module QueryMethods
       def where(opts = :chain, *rest)
         if acting_as? && opts.is_a?(Hash)
+          opts = opts.merge(opts.delete(klass.table_name) || {})
+
           opts, acts_as_opts = opts.stringify_keys.partition { |k,v| attribute_method?(k) }
           opts, acts_as_opts = Hash[opts], Hash[acts_as_opts]
           opts[acting_as_model.table_name] = acts_as_opts unless acts_as_opts.empty?
