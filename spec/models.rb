@@ -80,7 +80,7 @@ def initialize_schema
     create_table :inventory_product_features do |t|
       t.string :name
       t.float :price
-      t.actable
+      t.actable index: { name: 'index_inventory_product_features_on_actable' }
     end
   end
 end
