@@ -21,7 +21,9 @@ a separate table for each product type, i.e. a `pens` table with `color` column.
 
 ## Requirements
 
-`AciveRecord ~> 4.1.2` or newest
+* Ruby >= 2.2
+* ActiveSupport >= 4.2
+* ActiveRecord >= 4.2
 
 ## Installation
 
