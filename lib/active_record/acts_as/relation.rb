@@ -8,6 +8,7 @@ module ActiveRecord
         def acts_as(name, scope = nil, options = {})
           options, scope = scope, nil if Hash === scope
           association_method = options.delete(:association_method)
+          touch = options.delete(:touch)
           options = {as: :actable, dependent: :destroy, validate: false, autosave: true}.merge options
 
           cattr_reader(:validates_actable) { options.delete(:validates_actable) == false ? false : true }
@@ -24,7 +25,7 @@ module ActiveRecord
             end
           }
           validate :actable_must_be_valid
-          after_update :touch_actable
+          after_update :touch_actable unless touch == false
 
           cattr_reader(:acting_as_reflection) { reflections.stringify_keys[name.to_s] }
           cattr_reader(:acting_as_name) { name.to_s }
