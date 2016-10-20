@@ -12,7 +12,7 @@ module ActiveRecord
           as                 = options.delete(:as) || :actable
           validates_actable  = !options.key?(:validates_actable) || options.delete(:validates_actable)
 
-          options = options.reverse_merge(as: as, validate: false, autosave: true, inverse_of: as)
+          options = options.reverse_merge(as: as, validate: false, inverse_of: as)
 
           reflections = has_one(name, scope, options)
           default_scope -> {
@@ -26,10 +26,6 @@ module ActiveRecord
             end
           }
           validate :actable_must_be_valid if validates_actable
-
-          unless touch == false
-            after_update :touch, if: ActiveRecord.version.to_s.to_f >= 5.1 ? :saved_changes? : :changed?
-          end
 
           before_save do
             @_acting_as_changed = ActiveRecord.version.to_s.to_f >= 5.1 ? acting_as.has_changes_to_save? : acting_as.changed?
@@ -51,8 +47,19 @@ module ActiveRecord
           alias_method :acting_as=, "#{name}=".to_sym
 
           include ActsAs::InstanceMethods
+          include ActsAs::Autosave
           singleton_class.module_eval do
             include ActsAs::ClassMethods
+          end
+
+          after_update do
+            non_cyclic_save(acting_as) do
+              if ActiveRecord.version.to_s.to_f >= 5.1 ? acting_as.has_changes_to_save? : acting_as.changed?
+                acting_as.save
+              elsif touch != false
+                touch
+              end
+            end
           end
         end
 
@@ -79,7 +86,7 @@ module ActiveRecord
         def actable(options = {})
           name = options.delete(:as) || :actable
 
-          reflections = belongs_to(name, options.reverse_merge(validate: false, polymorphic: true, dependent: :destroy, autosave: true, inverse_of: to_s.underscore))
+          reflections = belongs_to(name, options.reverse_merge(validate: false, polymorphic: true, dependent: :destroy))
 
           cattr_reader(:actable_reflection) { reflections.stringify_keys[name.to_s] }
 
@@ -97,6 +104,15 @@ module ActiveRecord
           end
 
           alias_method :specific, name
+
+          include ActsAs::Autosave
+          after_update do
+            non_cyclic_save(actable) do
+              if ActiveRecord.version.to_s.to_f >= 5.1 ? actable.has_changes_to_save? : actable.changed?
+                actable.save
+              end
+            end
+          end
         end
 
         def actable?
