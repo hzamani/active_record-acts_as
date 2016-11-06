@@ -93,6 +93,9 @@ module ActiveRecord
         end
       end
 
+      def touch
+        acting_as.touch
+      end
 
       def respond_to?(name, include_private = false, as_original_class = false)
         as_original_class ? super(name, include_private) : super(name, include_private) || acting_as.respond_to?(name)

@@ -229,6 +229,12 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect { pen.save }.to_not change { pen.reload.product.updated_at }
     end
 
+    it "touches supermodel when #touch is called" do
+      pen.save
+
+      expect { pen.touch }.to change { pen.product.updated_at }
+    end
+
     it "raises NoMethodEror on unexisting method call" do
       expect { pen.unexisted_method }.to raise_error(NoMethodError)
     end
