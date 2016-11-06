@@ -1,4 +1,3 @@
-
 module ActiveRecord
   module ActsAs
     module Migration
