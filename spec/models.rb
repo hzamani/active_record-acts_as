@@ -4,6 +4,7 @@ require 'active_record/acts_as'
 class Product < ActiveRecord::Base
   actable
   belongs_to :store
+  has_many :buyers
   validates_presence_of :name, :price
   store :settings, accessors: [:global_option]
 
@@ -20,7 +21,17 @@ class Pen < ActiveRecord::Base
   acts_as :product
   store_accessor :settings, :option1
 
+  has_many :pen_caps
+
   validates_presence_of :color
+end
+
+class Buyer < ActiveRecord::Base
+  belongs_to :product
+end
+
+class PenCap < ActiveRecord::Base
+  belongs_to :pen
 end
 
 class IsolatedPen < ActiveRecord::Base
@@ -71,6 +82,14 @@ def initialize_schema
 
     create_table :stores do |t|
       t.string :name
+    end
+
+    create_table :buyers do |t|
+      t.integer :product_id
+    end
+
+    create_table :pen_caps do |t|
+      t.integer :buyer_id
     end
 
     create_table :inventory_pen_lids do |t|

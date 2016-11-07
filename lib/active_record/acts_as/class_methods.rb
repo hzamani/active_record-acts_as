@@ -2,8 +2,7 @@ module ActiveRecord
   module ActsAs
     module ReflectionsWithActsAs
       def _reflections
-        @_reflections_acts_as_cache ||=
-          super.reverse_merge(acting_as_model._reflections)
+        super.reverse_merge(acting_as_model._reflections)
       end
     end
 

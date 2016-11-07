@@ -152,7 +152,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
 
   describe "._reflections" do
     it "merges the reflections on both superclass and subclass" do
-      expect(Pen._reflections.length).to eq(Product._reflections.length + 1)
+      expect(Pen._reflections.length).to eq(Product._reflections.length + 2)
     end
   end
 
@@ -267,13 +267,29 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       end
     end
 
-    it "can set assosications defined in supermodel" do
+    it "can set belongs_to associations defined in supermodel" do
       store.save
+      expect(pen.store).to be_nil
       pen.store = store
       pen.save
       pen.reload
       expect(pen.store).to eq(store)
       expect(pen.product.store).to eq(store)
+    end
+
+    it "can set has_many associations defined in supermodel" do
+      expect(pen.buyers).to be_empty
+      buyer = Buyer.create!
+      pen.buyers << buyer
+      expect(pen.buyers).to eq([buyer])
+      expect(pen.product.buyers).to eq([buyer])
+    end
+
+    it "can set has_many associations defined in submodel" do
+      expect(pen.pen_caps).to be_empty
+      pen_cap = PenCap.create!
+      pen.pen_caps << pen_cap
+      expect(pen.pen_caps).to eq([pen_cap])
     end
 
     it "should be appendable in an has_many relation using << operator" do
