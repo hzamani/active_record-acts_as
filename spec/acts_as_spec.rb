@@ -152,7 +152,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
 
   describe "._reflections" do
     it "merges the reflections on both superclass and subclass" do
-      expect(Pen._reflections.length).to eq(Product._reflections.length + 2)
+      expect(Pen._reflections.length).to eq(Product._reflections.length + 3)
     end
   end
 
@@ -198,6 +198,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
           "name": "pen",
           "price": 0.8,
           "store_id": null,
+          "pen_collection_id": null,
           "settings": {"global_option":"globalvalue", "option1":"value1"},
           "color": "red",
           "created_at": ' + pen.created_at.to_json + ',
@@ -316,7 +317,13 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
 
     context "includes supermodel attributes in .to_json response" do
       it "unless the submodel instance association doesn't exist" do
-        expect(JSON.parse(isolated_pen.to_json)).to eq(JSON.parse('{"id":null,"color":"red"}'))
+        expect(JSON.parse(isolated_pen.to_json)).to eq(JSON.parse('''
+          {
+            "id": null,
+            "color": "red",
+            "pen_collection_id": null
+          }
+        '''))
       end
 
       it "if the submodel instance association exists" do
@@ -328,6 +335,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
             "name": "pen",
             "price": 0.8,
             "store_id": null,
+            "pen_collection_id": null,
             "settings": {},
             "color": "red",
             "created_at": ' + pen.created_at.to_json + ',
