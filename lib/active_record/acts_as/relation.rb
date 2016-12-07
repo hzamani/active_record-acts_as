@@ -26,6 +26,14 @@ module ActiveRecord
           validate :actable_must_be_valid
           after_update :touch_actable unless touch == false
 
+          before_save do
+            @_acting_as_changed = acting_as.changed?
+            true
+          end
+          after_commit do
+            @_acting_as_changed = nil
+          end
+
           cattr_reader(:acting_as_reflection) { reflections.stringify_keys[name.to_s] }
           cattr_reader(:acting_as_name) { name.to_s }
           cattr_reader(:acting_as_model) { (options[:class_name] || name.to_s.camelize).constantize }

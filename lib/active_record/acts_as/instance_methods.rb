@@ -9,6 +9,10 @@ module ActiveRecord
         super || acting_as?(klass)
       end
 
+      def changed?
+        super || acting_as.changed? || @_acting_as_changed
+      end
+
       def acting_as_foreign_key
         acting_as[acting_as_reflection.foreign_key]
       end

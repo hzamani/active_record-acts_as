@@ -214,25 +214,34 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(pen.color).to eq('red')
     end
 
-    it "touches supermodel on save" do
-      pen.save
-      pen.reload
-      update = pen.product.updated_at
-      pen.color = "gray"
-      pen.save
-      expect(pen.updated_at).not_to eq(update)
-    end
+    context "touching" do
+      it "touches supermodel on save" do
+        pen.save
+        pen.reload
+        update = pen.product.updated_at
+        pen.color = "gray"
+        pen.save
+        expect(pen.updated_at).not_to eq(update)
+      end
 
-    it "touches supermodel only when attributes changed" do
-      pen.save
+      it "touches supermodel only when attributes changed" do
+        pen.save
 
-      expect { pen.save }.to_not change { pen.reload.product.updated_at }
-    end
+        expect { pen.save }.to_not change { pen.reload.product.updated_at }
+      end
 
-    it "touches supermodel when #touch is called" do
-      pen.save
+      it "touches supermodel when #touch is called" do
+        pen.save
 
-      expect { pen.touch }.to change { pen.product.updated_at }
+        expect { pen.touch }.to change { pen.product.updated_at }
+      end
+
+      it "touches belongs_to-touch associations if supermodel is updated" do
+        pen.build_pen_collection
+        pen.save!
+        pen.name = "superpen"
+        expect { pen.save! }.to change { pen.pen_collection.updated_at }
+      end
     end
 
     it "raises NoMethodEror on unexisting method call" do

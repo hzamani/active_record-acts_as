@@ -17,11 +17,16 @@ class Product < ActiveRecord::Base
   end
 end
 
+class PenCollection < ActiveRecord::Base
+  has_many :pens
+end
+
 class Pen < ActiveRecord::Base
   acts_as :product
   store_accessor :settings, :option1
 
   has_many :pen_caps
+  belongs_to :pen_collection, touch: true
 
   validates_presence_of :color
 end
@@ -67,8 +72,13 @@ end
 
 def initialize_schema
   initialize_database do
+    create_table :pen_collections do |t|
+      t.timestamps null: true
+    end
+
     create_table :pens do |t|
       t.string :color
+      t.integer :pen_collection_id
     end
 
     create_table :products do |t|
@@ -103,4 +113,5 @@ def initialize_schema
     end
   end
 end
+
 initialize_schema
