@@ -242,6 +242,13 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
         pen.name = "superpen"
         expect { pen.save! }.to change { pen.pen_collection.updated_at }
       end
+
+      it "touches belongs_to-touch associations of supermodel when submodel is updated" do
+        pen.store = store
+        pen.save!
+        pen.color = "gray"
+        expect { pen.save! }.to change { pen.store.updated_at }
+      end
     end
 
     it "raises NoMethodEror on unexisting method call" do

@@ -3,7 +3,7 @@ require 'active_record/acts_as'
 
 class Product < ActiveRecord::Base
   actable
-  belongs_to :store
+  belongs_to :store, touch: true
   has_many :buyers
   validates_presence_of :name, :price
   store :settings, accessors: [:global_option]
@@ -92,6 +92,7 @@ def initialize_schema
 
     create_table :stores do |t|
       t.string :name
+      t.timestamps null: true
     end
 
     create_table :buyers do |t|
