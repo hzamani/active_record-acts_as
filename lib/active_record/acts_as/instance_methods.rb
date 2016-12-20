@@ -23,11 +23,6 @@ module ActiveRecord
         !acting_as.id.nil? && !acting_as_foreign_key.nil?
       end
 
-      def touch_actable
-        return unless changed?
-        acting_as.touch
-      end
-
       def actable_must_be_valid
         if validates_actable
           unless acting_as.valid?

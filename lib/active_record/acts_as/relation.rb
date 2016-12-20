@@ -24,7 +24,10 @@ module ActiveRecord
             end
           }
           validate :actable_must_be_valid
-          after_update :touch_actable unless touch == false
+
+          unless touch == false
+            after_update :touch, if: :changed?
+          end
 
           before_save do
             @_acting_as_changed = acting_as.changed?
