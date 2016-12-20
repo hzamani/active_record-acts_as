@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.5] - 2016-12-20
+### Fixed
+- Don't try to touch supermodel if it's not persisted
+- Call `#destroy`, not `#delete`, on the submodule by default to trigger callbacks
+
 ## [2.0.4] - 2016-12-07
 ### Fixed
 - Touch associated objects if supermodel is updated
@@ -32,7 +37,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fixed `remove_actable` migration helper (https://github.com/hzamani/active_record-acts_as/pull/71, thanks to [nuclearpidgeon](https://github.com/nuclearpidgeon)!)
 
-[Unreleased]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.4...HEAD
+[Unreleased]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.5...HEAD
+[2.0.5]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.4...v2.0.5
 [2.0.4]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.1...v2.0.2
