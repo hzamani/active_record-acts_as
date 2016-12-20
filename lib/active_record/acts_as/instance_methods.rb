@@ -92,7 +92,7 @@ module ActiveRecord
       end
 
       def touch
-        acting_as.touch
+        acting_as.touch if acting_as.persisted?
       end
 
       def respond_to?(name, include_private = false, as_original_class = false)
