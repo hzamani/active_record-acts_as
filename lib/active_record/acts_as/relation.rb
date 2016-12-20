@@ -73,7 +73,7 @@ module ActiveRecord
         def actable(options = {})
           name = options.delete(:as) || :actable
 
-          reflections = belongs_to name, {polymorphic: true, dependent: :delete, autosave: true}.merge(options)
+          reflections = belongs_to(name, options.reverse_merge(polymorphic: true, dependent: :destroy, autosave: true))
 
           cattr_reader(:actable_reflection) { reflections.stringify_keys[name.to_s] }
 
