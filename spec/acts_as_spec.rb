@@ -215,6 +215,20 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(pen.color).to eq('red')
     end
 
+    context "deleting" do
+      it "destroys associated records defined with `has_many dependent: :destroy` on supermodel" do
+        pen.save!
+        pen.buyers.create!
+        expect { pen.destroy }.to change { Buyer.count }.by(-1)
+      end
+
+      it "destroys associated records defined with `has_many dependent: :destroy` on submodel" do
+        pen.save!
+        pen.pen_caps.create!
+        expect { pen.destroy }.to change { PenCap.count }.by(-1)
+      end
+    end
+
     context "touching" do
       it "touches supermodel on save" do
         pen.save

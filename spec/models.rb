@@ -4,7 +4,7 @@ require 'active_record/acts_as'
 class Product < ActiveRecord::Base
   actable
   belongs_to :store, touch: true
-  has_many :buyers
+  has_many :buyers, dependent: :destroy
   validates_presence_of :name, :price
   store :settings, accessors: [:global_option]
 
@@ -25,7 +25,7 @@ class Pen < ActiveRecord::Base
   acts_as :product
   store_accessor :settings, :option1
 
-  has_many :pen_caps
+  has_many :pen_caps, dependent: :destroy
   belongs_to :pen_collection, touch: true
 
   validates_presence_of :color
@@ -100,7 +100,7 @@ def initialize_schema
     end
 
     create_table :pen_caps do |t|
-      t.integer :buyer_id
+      t.integer :pen_id
     end
 
     create_table :inventory_pen_lids do |t|
