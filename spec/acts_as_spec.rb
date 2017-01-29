@@ -270,7 +270,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect { pen.unexisted_method }.to raise_error(NoMethodError)
     end
 
-    it "destroies Supermodel on destroy" do
+    it "destroys Supermodel on destroy" do
       pen.save
       product_id = pen.product.id
       pen.destroy
