@@ -5,6 +5,7 @@ class Product < ActiveRecord::Base
   actable
   belongs_to :store, touch: true
   has_many :buyers, dependent: :destroy
+  has_one :payment, as: :payable
   validates_presence_of :name, :price
   store :settings, accessors: [:global_option]
 
@@ -15,6 +16,10 @@ class Product < ActiveRecord::Base
   def raise_error
     specific.non_existant_method
   end
+end
+
+class Payment < ActiveRecord::Base
+  belongs_to :payable, polymorphic: true
 end
 
 class PenCollection < ActiveRecord::Base
@@ -88,6 +93,11 @@ def initialize_schema
       t.text :settings
       t.timestamps null: true
       t.actable
+    end
+
+    create_table :payments do |t|
+      t.references :payable, polymorphic: true
+      t.timestamps null: true
     end
 
     create_table :stores do |t|

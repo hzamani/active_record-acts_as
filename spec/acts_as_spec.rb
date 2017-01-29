@@ -266,6 +266,17 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       end
     end
 
+    context "polymorphic associations" do
+      it "handles them correctly" do
+        payment = Payment.new
+        pen.payment = payment
+        pen.save!
+        expect(pen.reload.payment).to       eq(payment)
+        expect(pen.payment.payable_type).to eq(pen.acting_as.class.to_s)
+        expect(pen.payment.payable_id).to   eq(pen.acting_as.id)
+      end
+    end
+
     it "raises NoMethodEror on unexisting method call" do
       expect { pen.unexisted_method }.to raise_error(NoMethodError)
     end
