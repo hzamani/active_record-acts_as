@@ -91,7 +91,7 @@ module ActiveRecord
         end
       end
 
-      def touch
+      def touch(*)
         acting_as.touch if acting_as.persisted?
       end
 
