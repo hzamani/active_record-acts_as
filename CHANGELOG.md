@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.6] - 2017-02-17
+### Added
+- Allow arguments to #touch and forward them to the supermodel
+
 ## [2.0.5] - 2016-12-20
 ### Fixed
 - Don't try to touch supermodel if it's not persisted
@@ -37,7 +41,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fixed `remove_actable` migration helper (https://github.com/hzamani/active_record-acts_as/pull/71, thanks to [nuclearpidgeon](https://github.com/nuclearpidgeon)!)
 
-[Unreleased]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.5...HEAD
+[Unreleased]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.6...HEAD
+[2.0.6]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.5...v2.0.6
 [2.0.5]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.4...v2.0.5
 [2.0.4]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/hzamani/active_record-acts_as/compare/v2.0.2...v2.0.3
