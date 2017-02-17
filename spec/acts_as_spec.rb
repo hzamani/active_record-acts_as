@@ -230,6 +230,12 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
 
     context "touching" do
+      it "forwards arguments to #touch to the supermodel" do
+        pen.save!
+        expect(pen.product).to receive(:touch).with(:one, :two)
+        pen.touch(:one, :two)
+      end
+
       it "touches supermodel on save" do
         pen.save
         pen.reload
