@@ -8,7 +8,7 @@ module ActiveRecord
           options, scope = scope, nil if Hash === scope
           association_method = options.delete(:association_method)
           touch = options.delete(:touch)
-          options = {as: :actable, dependent: :destroy, validate: false, autosave: true}.merge options
+          options = options.reverse_merge(as: :actable, validate: false, autosave: true)
 
           cattr_reader(:validates_actable) { options.delete(:validates_actable) == false ? false : true }
 
@@ -35,6 +35,10 @@ module ActiveRecord
           end
           after_commit do
             @_acting_as_changed = nil
+          end
+          # Workaround for https://github.com/rails/rails/issues/13609
+          after_destroy do
+            acting_as.destroy if acting_as && !acting_as.destroyed?
           end
 
           cattr_reader(:acting_as_reflection) { reflections.stringify_keys[name.to_s] }
