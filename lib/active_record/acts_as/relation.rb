@@ -40,7 +40,7 @@ module ActiveRecord
           cattr_reader(:acting_as_reflection) { reflections.stringify_keys[name.to_s] }
           cattr_reader(:acting_as_name) { name.to_s }
           cattr_reader(:acting_as_model) { (options[:class_name] || name.to_s.camelize).constantize }
-          class_eval "def #{name}; super || build_#{name} end"
+          class_eval "def #{name}; super || build_#{name}(acting_as_model.actable_reflection.name => self); end"
           alias_method :acting_as, name
           alias_method :acting_as=, "#{name}=".to_sym
 

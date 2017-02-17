@@ -80,9 +80,9 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
   end
 
   describe "#acting_as" do
-    it "returns autobuilded acts_as model" do
-      expect(pen.acting_as).to_not be_nil
+    it "builds acts_as model with actable relation set" do
       expect(pen.acting_as).to be_instance_of(Product)
+      expect(pen.acting_as.actable).to be_instance_of(Pen)
     end
   end
 
