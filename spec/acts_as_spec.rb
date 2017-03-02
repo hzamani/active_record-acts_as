@@ -416,6 +416,12 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect(relation.scope_for_create.keys).to include('name')
       expect(relation.scope_for_create['name']).to eq('new name')
     end
+
+    it "works when the submodel table name is specified" do
+      red_pen = Pen.create!(name: 'red pen', price: 0.8, color: 'red')
+
+      expect(Pen.find_by('pens.color' => 'red')).to eq(red_pen)
+    end
   end
 
   context 'Namespaces' do

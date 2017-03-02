@@ -3,11 +3,19 @@ module ActiveRecord
     module QueryMethods
       def where(opts = :chain, *rest)
         if acting_as? && opts.is_a?(Hash)
-          opts = opts.merge(opts.delete(klass.table_name) || {})
+          if table_name_opts = opts.delete(klass.table_name)
+            opts = opts.merge(table_name_opts)
+          end
 
-          opts, acts_as_opts = opts.stringify_keys.partition { |k,v| attribute_method?(k) }
-          opts, acts_as_opts = Hash[opts], Hash[acts_as_opts]
-          opts[acting_as_model.table_name] = acts_as_opts unless acts_as_opts.empty?
+          # Filter out the conditions that should be
+          # applied to the `acting_as_model`. Ignore
+          # conditions that contain a dot or are attributes
+          # of the submodel.
+          opts, acts_as_opts = opts.stringify_keys.partition { |k, _| k =~ /\./ || attribute_method?(k) }.map(&:to_h)
+
+          if acts_as_opts.any?
+            opts[acting_as_model.table_name] = acts_as_opts
+          end
         end
 
         super
