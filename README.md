@@ -1,8 +1,6 @@
-[![Gem Version](https://badge.fury.io/rb/active_record-acts_as.svg)](http://badge.fury.io/rb/active_record-acts_as)
-[![Build Status](https://travis-ci.org/hzamani/active_record-acts_as.svg)](https://travis-ci.org/hzamani/active_record-acts_as)
-[![Code Climate](https://codeclimate.com/github/hzamani/active_record-acts_as.png)](https://codeclimate.com/github/hzamani/active_record-acts_as)
-[![Coverage Status](https://coveralls.io/repos/hzamani/active_record-acts_as/badge.png)](https://coveralls.io/r/hzamani/active_record-acts_as)
-[![Dependency Status](https://gemnasium.com/hzamani/active_record-acts_as.svg)](https://gemnasium.com/hzamani/active_record-acts_as)
+# Development moved
+
+Active development of this project has moved to [the `krautcomputing` fork](https://github.com/krautcomputing/active_record-acts_as). Please report issues and open PRs over there!
 
 # ActiveRecord::ActsAs
 
