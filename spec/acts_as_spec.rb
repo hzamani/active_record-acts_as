@@ -347,32 +347,40 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
 
     context "includes supermodel attributes in .to_json response" do
-      it "unless the submodel instance association doesn't exist" do
-        expect(JSON.parse(isolated_pen.to_json)).to eq(JSON.parse('''
-          {
-            "id": null,
-            "color": "red",
-            "pen_collection_id": null
-          }
-        '''))
-      end
+      context "if the submodel instance association " do
+        it "doesn't exist" do
+          expect(JSON.parse(pen.to_json)).to eq(JSON.parse('''
+            {
+              "id": null,
+              "name": "pen",
+              "price": 0.8,
+              "store_id": null,
+              "pen_collection_id": null,
+              "settings": {},
+              "color": "red",
+              "created_at": null,
+              "updated_at": null
+            }
+          '''))
+        end
 
-      it "if the submodel instance association exists" do
-        p = Product.new(name: 'Test Pen', price: 0.8, actable: pen)
-        p.save
-        expect(JSON.parse(pen.to_json)).to eq(JSON.parse('''
-          {
-            "id": '+ pen.id.to_s + ',
-            "name": "pen",
-            "price": 0.8,
-            "store_id": null,
-            "pen_collection_id": null,
-            "settings": {},
-            "color": "red",
-            "created_at": ' + pen.created_at.to_json + ',
-            "updated_at": ' + pen.updated_at.to_json + '
-          }
-        '''))
+        it "exists" do
+          p = Product.new(name: 'Test Pen', price: 0.8, actable: pen)
+          p.save
+          expect(JSON.parse(pen.to_json)).to eq(JSON.parse('''
+            {
+              "id": '+ pen.id.to_s + ',
+              "name": "pen",
+              "price": 0.8,
+              "store_id": null,
+              "pen_collection_id": null,
+              "settings": {},
+              "color": "red",
+              "created_at": ' + pen.created_at.to_json + ',
+              "updated_at": ' + pen.updated_at.to_json + '
+            }
+          '''))
+        end
       end
     end
 
