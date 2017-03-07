@@ -6,11 +6,11 @@ require 'active_record/acts_as/version'
 Gem::Specification.new do |spec|
   spec.name          = "active_record-acts_as"
   spec.version       = ActiveRecord::ActsAs::VERSION
-  spec.authors       = ["Hassan Zamani"]
-  spec.email         = ["hsn.zamani@gmail.com"]
+  spec.authors       = ["Hassan Zamani", "Manuel Meurer"]
+  spec.email         = ["hsn.zamani@gmail.com", "manuel@krautcomputing.com"]
   spec.summary       = %q{Simulate multi-table inheritance for activerecord models}
   spec.description   = %q{Simulate multi-table inheritance for activerecord models using a plymorphic association}
-  spec.homepage      = "http://github.com/hzamani/active_record-acts_as"
+  spec.homepage      = "http://github.com/krautcomputing/active_record-acts_as"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
