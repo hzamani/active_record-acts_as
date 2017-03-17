@@ -370,6 +370,21 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
   end
 
+  describe ".actables" do
+    before(:each) { clear_database }
+
+    it "returns a query for the actable records" do
+      red_pen   = Pen.create!(name: 'red pen',   price: 0.8, color: 'red')
+      blue_pen  = Pen.create!(name: 'blue pen',  price: 0.8, color: 'blue')
+      black_pen = Pen.create!(name: 'black pen', price: 0.9, color: 'black')
+
+      actables = Pen.where(price: 0.8).actables
+
+      expect(actables).to be_kind_of(ActiveRecord::Relation)
+      expect(actables.to_a).to eq([red_pen.acting_as, blue_pen.acting_as])
+    end
+  end
+
   context "Querying" do
     before(:each) { clear_database }
 

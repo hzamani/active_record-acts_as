@@ -14,6 +14,10 @@ module ActiveRecord
       def validators_on(*args)
         super + acting_as_model.validators_on(*args)
       end
+
+      def actables
+        acting_as_model.where(actable_id: select(:id))
+      end
     end
   end
 end
