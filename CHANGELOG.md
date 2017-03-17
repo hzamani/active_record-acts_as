@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2017-03-17
+### Added
+- Access superobjects from query on submodel by calling `.actables`
+
 ## [2.0.9] - 2017-03-02
 ### Fixed
 - Fix handling of query conditions that contain a dot
@@ -53,7 +57,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fixed `remove_actable` migration helper (https://github.com/hzamani/active_record-acts_as/pull/71, thanks to [nuclearpidgeon](https://github.com/nuclearpidgeon)!)
 
-[Unreleased]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.0.9...HEAD
+[Unreleased]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.0.9...v2.1.0
 [2.0.9]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.0.8...v2.0.9
 [2.0.8]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.0.7...v2.0.8
 [2.0.7]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.0.6...v2.0.7
