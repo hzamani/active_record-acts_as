@@ -68,11 +68,11 @@ module ActiveRecord
       private :write_attribute, :write_store_attribute
 
       def attributes
-        acting_as.nil? ? super : acting_as.attributes.except(acting_as_reflection.type, acting_as_reflection.foreign_key).merge(super)
+        acting_as.attributes.except(acting_as_reflection.type, acting_as_reflection.foreign_key).merge(super)
       end
 
       def attribute_names
-        acting_as.nil? ? super : super | (acting_as.attribute_names - [acting_as_reflection.type, acting_as_reflection.foreign_key])
+        super | (acting_as.attribute_names - [acting_as_reflection.type, acting_as_reflection.foreign_key])
       end
 
       def has_attribute?(attr_name, as_original_class = false)
