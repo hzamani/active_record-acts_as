@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'pry'
+require 'active_record/acts_as'
+
+ActiveRecord::Base.logger = Logger.new(STDOUT)
+
+Pry.start

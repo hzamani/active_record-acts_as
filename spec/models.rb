@@ -1,4 +1,5 @@
-require 'database_helper'
+require_relative 'database_helper'
+
 require 'active_record/acts_as'
 
 class Product < ActiveRecord::Base
