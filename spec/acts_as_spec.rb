@@ -86,17 +86,6 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
   end
 
-  describe "#acting_as_foreign_key" do
-    let(:product_foreign_key_value) do
-      pen.acting_as[pen.acting_as.actable_reflection.foreign_key]
-    end
-    it "return acts_as foreign key value" do
-      pen.save
-      expect(pen.acting_as_foreign_key).to eq(product_foreign_key_value)
-      expect(pen.acting_as_foreign_key).to eq(pen.id)
-    end
-  end
-
   describe "#acting_as=" do
     it "sets acts_as model" do
       product = Product.new(name: 'new product', price: 0.99)

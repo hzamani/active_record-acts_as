@@ -13,16 +13,6 @@ module ActiveRecord
         super || acting_as.changed? || (defined?(@_acting_as_changed) ? @_acting_as_changed : false)
       end
 
-      def acting_as_foreign_key
-        acting_as[acting_as_reflection.foreign_key]
-      end
-
-      # Is the superclass persisted to the database?
-      def acting_as_persisted?
-        return false if acting_as.nil?
-        !acting_as.id.nil? && !acting_as_foreign_key.nil?
-      end
-
       def actable_must_be_valid
         if validates_actable
           unless acting_as.valid?
@@ -110,26 +100,10 @@ module ActiveRecord
       end
 
       def method_missing(method, *args, &block)
-        uses_superclass_for?(method) ? acting_as.send(method, *args, &block) : super
-      end
-
-      def uses_superclass_for?(method)
-        responds_locally = self_respond_to?(method)
-        if acting_as.respond_to?(method)
-          if responds_locally
-            false
-          else
-            # Only use getters if the superclass has
-            # an instance that is linked to this class instance.
-            if acting_as_persisted?
-              true
-            else
-              responds_locally ? false : true
-            end
-          end
+        if !self_respond_to?(method) && acting_as.respond_to?(method)
+          acting_as.send(method, *args, &block)
         else
-          # If the superclass doesn't have it, use this class's methods
-          false
+          super
         end
       end
     end
