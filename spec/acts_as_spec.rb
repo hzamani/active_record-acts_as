@@ -359,6 +359,14 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
   end
 
+  describe '#respond.to?' do
+    it 'returns true for instance methods of the supermodel and submodel' do
+      red_pen = Pen.create!(name: 'red pen', price: 0.8, color: 'red')
+      expect(red_pen.respond_to?(:pen_instance_method)).to eq(true)
+      expect(red_pen.respond_to?(:present)).to eq(true)
+    end
+  end
+
   describe ".actables" do
     before(:each) { clear_database }
 

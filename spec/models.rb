@@ -43,6 +43,9 @@ class Pen < ActiveRecord::Base
   belongs_to :pen_collection, touch: true
 
   validates_presence_of :color
+
+  def pen_instance_method
+  end
 end
 
 class Buyer < ActiveRecord::Base
