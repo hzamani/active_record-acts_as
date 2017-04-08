@@ -172,6 +172,11 @@ acts_as :person, -> { includes(:friends) }
 Make sure you know what you are doing when overwriting `polymorphic` option.
 
 
+## Caveats
+
+Multiple `acts_as` in the same class are not supported!
+
+
 ## Migrating from acts_as_relation
 
 Replace `acts_as_superclass` in models with `actable` and if you where using
