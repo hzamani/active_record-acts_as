@@ -18,6 +18,19 @@ module ActiveRecord
       def actables
         acting_as_model.where(actable_id: select(:id))
       end
+
+      def method_missing(method, *args, &block)
+        if acting_as_model.respond_to?(method)
+          result = acting_as_model.public_send(method, *args, &block)
+          if result.is_a?(ActiveRecord::Relation)
+            all.joins(acting_as_name.to_sym).merge(result)
+          else
+            result
+          end
+        else
+          super
+        end
+      end
     end
   end
 end

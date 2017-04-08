@@ -374,6 +374,25 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
   end
 
+  context 'class methods' do
+    before(:each) { clear_database }
+
+    context 'when the class method returns a scope' do
+      it 'works' do
+        cheap_pen     = Pen.create!(name: 'cheap pen',     price: 0.5, color: 'blue')
+        expensive_pen = Pen.create!(name: 'expensive pen', price: 1,   color: 'red')
+
+        expect(Pen.with_price_higher_than(0.5).to_a).to eq([expensive_pen])
+      end
+    end
+
+    context 'when the class methods returns anything else' do
+      it 'works' do
+        expect(Pen.test_class_method).to eq('test')
+      end
+    end
+  end
+
   context "Querying" do
     before(:each) { clear_database }
 
