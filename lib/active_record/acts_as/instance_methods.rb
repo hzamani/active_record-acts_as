@@ -86,7 +86,11 @@ module ActiveRecord
       end
 
       def respond_to?(name, include_private = false, as_original_class = false)
-        as_original_class ? super(name, include_private) : super(name, include_private) || acting_as.respond_to?(name)
+        if as_original_class
+          super(name, include_private)
+        else
+          super(name, include_private) || acting_as.respond_to?(name)
+        end
       end
 
       def self_respond_to?(name, include_private = false)
