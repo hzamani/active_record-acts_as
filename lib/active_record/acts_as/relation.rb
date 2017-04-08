@@ -8,7 +8,8 @@ module ActiveRecord
           options, scope = scope, nil if Hash === scope
           association_method = options.delete(:association_method)
           touch = options.delete(:touch)
-          options = options.reverse_merge(as: :actable, validate: false, autosave: true)
+          as = options.delete(:as) || :actable
+          options = options.reverse_merge(as: as, validate: false, autosave: true, inverse_of: as)
 
           cattr_reader(:validates_actable) { options.delete(:validates_actable) == false ? false : true }
 
@@ -77,7 +78,7 @@ module ActiveRecord
         def actable(options = {})
           name = options.delete(:as) || :actable
 
-          reflections = belongs_to(name, options.reverse_merge(polymorphic: true, dependent: :destroy, autosave: true))
+          reflections = belongs_to(name, options.reverse_merge(polymorphic: true, dependent: :destroy, autosave: true, inverse_of: to_s.underscore))
 
           cattr_reader(:actable_reflection) { reflections.stringify_keys[name.to_s] }
 
