@@ -294,25 +294,42 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       expect { Product.find(product_id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
-    context "validates supermodel attributes" do
-      it "upon validate" do
-        p = Pen.new
-        expect(p).to be_invalid
-        expect(p.errors.keys).to include(:name, :price, :color)
-        p.name = 'testing'
-        expect(p).to be_invalid
-        p.color = 'red'
-        expect(p).to be_invalid
-        p.price = 0.8
-        expect(p).to be_valid
+    context "errors" do
+      context 'when validates_actable is set to true' do
+        it "combines supermodel and submodel errors" do
+          pen = Pen.new
+          expect(pen).to be_invalid
+          expect(pen.errors.to_h).to eq(
+            name:  "can't be blank",
+            price: "can't be blank",
+            color: "can't be blank"
+          )
+          pen.name = 'testing'
+          expect(pen).to be_invalid
+          expect(pen.errors.to_h).to eq(
+            price: "can't be blank",
+            color: "can't be blank"
+          )
+          pen.color = 'red'
+          expect(pen).to be_invalid
+          expect(pen.errors.to_h).to eq(
+            price: "can't be blank"
+          )
+          pen.price = 0.8
+          expect(pen).to be_valid
+        end
       end
 
-      it "unless validates_actable is set to false" do
-        p = IsolatedPen.new
-        expect(p).to be_invalid
-        expect(p.errors.keys).to include(:color)
-        p.color = 'red'
-        expect(p).to be_valid
+      context 'when validates_actable is set to false' do
+        it "unless validates_actable is set to false" do
+          pen = IsolatedPen.new
+          expect(pen).to be_invalid
+          expect(pen.errors.to_h).to eq(
+            color: "can't be blank"
+          )
+          pen.color = 'red'
+          expect(pen).to be_valid
+        end
       end
     end
 

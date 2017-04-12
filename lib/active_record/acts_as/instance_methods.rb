@@ -14,11 +14,9 @@ module ActiveRecord
       end
 
       def actable_must_be_valid
-        if validates_actable
-          unless acting_as.valid?
-            acting_as.errors.each do |att, message|
-              errors.add(att, message)
-            end
+        unless acting_as.valid?
+          acting_as.errors.each do |attribute, message|
+            errors.add(attribute, message) unless errors[attribute].include?(message)
           end
         end
       end

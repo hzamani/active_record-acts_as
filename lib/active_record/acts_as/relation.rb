@@ -6,14 +6,15 @@ module ActiveRecord
       module ClassMethods
         def acts_as(name, scope = nil, options = {})
           options, scope = scope, nil if Hash === scope
+
           association_method = options.delete(:association_method)
-          touch = options.delete(:touch)
-          as = options.delete(:as) || :actable
+          touch              = options.delete(:touch)
+          as                 = options.delete(:as) || :actable
+          validates_actable  = !options.key?(:validates_actable) || options.delete(:validates_actable)
+
           options = options.reverse_merge(as: as, validate: false, autosave: true, inverse_of: as)
 
-          cattr_reader(:validates_actable) { options.delete(:validates_actable) == false ? false : true }
-
-          reflections = has_one name, scope, options
+          reflections = has_one(name, scope, options)
           default_scope -> {
             case association_method
               when :eager_load
@@ -24,7 +25,7 @@ module ActiveRecord
                 includes(name)
             end
           }
-          validate :actable_must_be_valid
+          validate :actable_must_be_valid if validates_actable
 
           unless touch == false
             after_update :touch, if: :changed?
@@ -78,7 +79,7 @@ module ActiveRecord
         def actable(options = {})
           name = options.delete(:as) || :actable
 
-          reflections = belongs_to(name, options.reverse_merge(polymorphic: true, dependent: :destroy, autosave: true, inverse_of: to_s.underscore))
+          reflections = belongs_to(name, options.reverse_merge(validate: false, polymorphic: true, dependent: :destroy, autosave: true, inverse_of: to_s.underscore))
 
           cattr_reader(:actable_reflection) { reflections.stringify_keys[name.to_s] }
 
