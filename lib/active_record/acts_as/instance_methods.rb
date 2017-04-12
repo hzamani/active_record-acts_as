@@ -82,7 +82,9 @@ module ActiveRecord
       end
 
       def touch(*args)
-        acting_as.touch(*args) if acting_as.persisted?
+        self_args, acting_as_args = args.partition { |arg| has_attribute?(arg, true) }
+        super(*self_args) if self_args.any?
+        acting_as.touch(*acting_as_args) if acting_as.persisted?
       end
 
       def respond_to?(name, include_private = false, as_original_class = false)

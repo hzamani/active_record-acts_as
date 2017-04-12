@@ -190,6 +190,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
           "pen_collection_id": null,
           "settings": {"global_option":"globalvalue", "option1":"value1"},
           "color": "red",
+          "designed_at": null,
           "created_at": ' + pen.created_at.to_json + ',
           "updated_at": ' + pen.updated_at.to_json + '
         }
@@ -218,46 +219,56 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       end
     end
 
-    context "touching" do
-      it "forwards arguments to #touch to the supermodel" do
-        pen.save!
-        expect(pen.product).to receive(:touch).with(:one, :two)
-        pen.touch(:one, :two)
+    context 'touching' do
+      describe '#touch with arguments' do
+        it "forwards supermodel arguments tothe supermodel" do
+          pen.save!
+          expect(pen.product).to receive(:touch).with(:updated_at)
+          pen.touch(:updated_at, :designed_at)
+        end
+
+        it "updates submodel arguments" do
+          pen.save!
+          expect { pen.touch(:designed_at) }.to change { pen.designed_at }
+        end
       end
 
-      it "touches supermodel on save" do
-        pen.save
-        pen.reload
-        update = pen.product.updated_at
-        pen.color = "gray"
-        pen.save
-        expect(pen.updated_at).not_to eq(update)
+      describe '#touch without arguments' do
+        it "touches the supermodel" do
+          pen.save!
+          expect(pen.product).to receive(:touch).with(no_args)
+          pen.touch
+        end
       end
 
-      it "touches supermodel only when attributes changed" do
-        pen.save
+      describe 'saving' do
+        it "touches supermodel on save" do
+          pen.save
+          pen.reload
+          update = pen.product.updated_at
+          pen.color = "gray"
+          pen.save
+          expect(pen.updated_at).not_to eq(update)
+        end
 
-        expect { pen.save }.to_not change { pen.reload.product.updated_at }
-      end
+        it "does not touch supermodel when no attributes changed" do
+          pen.save!
+          expect { pen.save! }.to_not change { pen.reload.product.updated_at }
+        end
 
-      it "touches supermodel when #touch is called" do
-        pen.save
+        it "touches belongs_to-touch associations if supermodel is updated" do
+          pen.build_pen_collection
+          pen.save!
+          pen.name = "superpen"
+          expect { pen.save! }.to change { pen.pen_collection.updated_at }
+        end
 
-        expect { pen.touch }.to change { pen.product.updated_at }
-      end
-
-      it "touches belongs_to-touch associations if supermodel is updated" do
-        pen.build_pen_collection
-        pen.save!
-        pen.name = "superpen"
-        expect { pen.save! }.to change { pen.pen_collection.updated_at }
-      end
-
-      it "touches belongs_to-touch associations of supermodel when submodel is updated" do
-        pen.store = store
-        pen.save!
-        pen.color = "gray"
-        expect { pen.save! }.to change { pen.store.updated_at }
+        it "touches belongs_to-touch associations of supermodel when submodel is updated" do
+          pen.store = store
+          pen.save!
+          pen.color = "gray"
+          expect { pen.save! }.to change { pen.store.updated_at }
+        end
       end
     end
 
@@ -346,6 +357,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
         "store_id"          => nil,
         "settings"          => {},
         "created_at"        => nil,
+        "designed_at"       => nil,
         "updated_at"        => nil,
         "color"             => "red",
         "pen_collection_id" => nil
@@ -355,7 +367,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
 
   describe "#attribute_names" do
     it "returns the attribute names of the supermodel and submodel" do
-      expect(pen.attribute_names).to eq(["id", "color", "pen_collection_id", "name", "price", "store_id", "settings", "created_at", "updated_at"])
+      expect(pen.attribute_names).to eq(["id", "color", "designed_at", "pen_collection_id", "name", "price", "store_id", "settings", "created_at", "updated_at"])
     end
   end
 

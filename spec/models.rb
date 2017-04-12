@@ -95,6 +95,7 @@ def initialize_schema
 
     create_table :pens do |t|
       t.string :color
+      t.datetime :designed_at
       t.integer :pen_collection_id
     end
 
