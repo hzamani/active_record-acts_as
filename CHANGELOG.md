@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2017-04-12
+### Fixed
+- Prevent duplicate validation errors (fixes https://github.com/krautcomputing/active_record-acts_as/issues/2)
+
+### Added
+- Added support for touching submodel attributes (https://github.com/krautcomputing/active_record-acts_as/pull/3, thanks to [dezmathio](https://github.com/dezmathio)!)
+
 ## [2.2.1] - 2017-04-08
 ### Fixed
 - Make sure submodel instance changes are retained when calling `submodel_instance.acting_as.specific`
@@ -69,7 +76,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fixed `remove_actable` migration helper (https://github.com/hzamani/active_record-acts_as/pull/71, thanks to [nuclearpidgeon](https://github.com/nuclearpidgeon)!)
 
-[Unreleased]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.2.1...HEAD
+[Unreleased]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.1.1...v2.2.0
 [2.1.1]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.1.0...v2.1.1
