@@ -19,6 +19,10 @@ module ActiveRecord
         acting_as_model.where(actable_id: select(:id))
       end
 
+      def respond_to_missing?(method, include_private = false)
+        acting_as_model.respond_to?(method, include_private) || super
+      end
+
       def method_missing(method, *args, &block)
         if acting_as_model.respond_to?(method)
           result = acting_as_model.public_send(method, *args, &block)
