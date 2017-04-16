@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0] - 2017-04-16
+### Changed
+- Don't make all supermodel class methods callable by submodel, only scopes. Add `callable_by_submodel` to supermodel so users can make their own class methods callable by submodels.
+
 ## [2.3.1] - 2017-04-15
 ### Fixed
 - Make calling supermodel class methods work through relations/associations as well
@@ -80,7 +84,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fixed `remove_actable` migration helper (https://github.com/hzamani/active_record-acts_as/pull/71, thanks to [nuclearpidgeon](https://github.com/nuclearpidgeon)!)
 
-[Unreleased]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.3.1...HEAD
+[Unreleased]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.4.0...HEAD
+[2.4.0]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.3.1...v2.4.0
 [2.3.1]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/krautcomputing/active_record-acts_as/compare/v2.2.0...v2.2.1
