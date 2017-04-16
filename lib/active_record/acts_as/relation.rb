@@ -83,6 +83,19 @@ module ActiveRecord
 
           cattr_reader(:actable_reflection) { reflections.stringify_keys[name.to_s] }
 
+          def self.methods_callable_by_submodel
+            @methods_callable_by_submodel ||= Set.new
+          end
+
+          def self.callable_by_submodel(method)
+            @methods_callable_by_submodel ||= Set.new
+            @methods_callable_by_submodel << method
+          end
+
+          def self.scope(*)
+            callable_by_submodel super
+          end
+
           alias_method :specific, name
         end
 

@@ -10,12 +10,14 @@ class Product < ActiveRecord::Base
   validates_presence_of :name, :price
   store :settings, accessors: [:global_option]
 
-  def self.with_price_higher_than(price)
-    where('price > ?', price)
+  scope :with_price_higher_than, ->(price) { where('price > ?', price) }
+
+  def self.class_method
+    'class_method'
   end
 
-  def self.test_class_method
-    'test'
+  callable_by_submodel def self.class_method_callable_by_submodel
+    'class_method_callable_by_submodel'
   end
 
   def present

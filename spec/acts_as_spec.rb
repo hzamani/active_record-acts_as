@@ -414,18 +414,27 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
   context 'class methods' do
     before(:each) { clear_database }
 
-    context 'when the class method returns a scope' do
-      it 'works' do
+    context 'when they are defined via `scope`' do
+      it 'can be called from the submodel' do
         cheap_pen     = Pen.create!(name: 'cheap pen',     price: 0.5, color: 'blue')
         expensive_pen = Pen.create!(name: 'expensive pen', price: 1,   color: 'red')
 
+        expect(Product.with_price_higher_than(0.5).to_a).to eq([expensive_pen.acting_as])
         expect(Pen.with_price_higher_than(0.5).to_a).to eq([expensive_pen])
       end
     end
 
-    context 'when the class methods returns anything else' do
-      it 'works' do
-        expect(Pen.test_class_method).to eq('test')
+    context 'when they are not defined via `scope` but made callable by submodel' do
+      it 'can be called from the submodel' do
+        expect(Product.class_method_callable_by_submodel).to eq('class_method_callable_by_submodel')
+        expect(Pen.class_method_callable_by_submodel).to eq('class_method_callable_by_submodel')
+      end
+    end
+
+    context 'when they are neither defined via `scope` nor made callable by submodel' do
+      it 'cannot be called from the submodel' do
+        expect(Product.class_method).to eq('class_method')
+        expect { Pen.class_method }.to raise_error(NoMethodError)
       end
     end
   end
