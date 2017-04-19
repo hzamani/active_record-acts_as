@@ -93,6 +93,7 @@ module ActiveRecord
 
       def touch(*args)
         acting_as.touch(*args) if acting_as.persisted?
+        super
       end
 
       def respond_to?(name, include_private = false, as_original_class = false)
