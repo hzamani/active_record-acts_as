@@ -443,22 +443,30 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     before(:each) { clear_database }
 
     it "respects supermodel attributes in .where" do
-      red_pen = Pen.create(name: 'red pen', price: 0.8, color: 'red')
-      blue_pen = Pen.create(name: 'blue pen', price: 0.8, color: 'blue')
+      red_pen   = Pen.create(name: 'red pen',   price: 0.8, color: 'red')
+      blue_pen  = Pen.create(name: 'blue pen',  price: 0.8, color: 'blue')
       black_pen = Pen.create(name: 'black pen', price: 0.9, color: 'black')
 
-      expect{Pen.where(price: 0.8)}.to_not raise_error
-      expect(Pen.where(price: 0.8)).to include(red_pen, blue_pen)
-      expect(Pen.where(price: 0.8)).to_not include(black_pen)
+      expect(Pen.where(price: 0.8).to_a).to eq([red_pen, blue_pen])
+    end
+
+    it "respects supermodel attributes in .where!" do
+      red_pen   = Pen.create(name: 'red pen',   price: 0.8, color: 'red')
+      blue_pen  = Pen.create(name: 'blue pen',  price: 0.8, color: 'blue')
+      black_pen = Pen.create(name: 'black pen', price: 0.9, color: 'black')
+
+      relation = Pen.all
+      relation.where!(price: 0.8)
+      expect(relation.to_a).to eq([red_pen, blue_pen])
     end
 
     it "respects supermodel attributes in .find_by" do
-      red_pen = Pen.create(name: 'red pen', price: 0.8, color: 'red')
-      blue_pen = Pen.create(name: 'blue pen', price: 0.8, color: 'blue')
+      red_pen   = Pen.create(name: 'red pen',   price: 0.8, color: 'red')
+      blue_pen  = Pen.create(name: 'blue pen',  price: 0.8, color: 'blue')
       black_pen = Pen.create(name: 'black pen', price: 0.9, color: 'black')
 
-      expect(Pen.find_by(name: 'red pen')).to eq(red_pen)
-      expect(Pen.find_by(name: 'blue pen')).to eq(blue_pen)
+      expect(Pen.find_by(name: 'red pen')).to   eq(red_pen)
+      expect(Pen.find_by(name: 'blue pen')).to  eq(blue_pen)
       expect(Pen.find_by(name: 'black pen')).to eq(black_pen)
     end
 

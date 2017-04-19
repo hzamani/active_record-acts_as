@@ -1,7 +1,7 @@
 module ActiveRecord
   module ActsAs
     module QueryMethods
-      def where(opts = :chain, *rest)
+      def where!(opts, *)
         if acting_as? && opts.is_a?(Hash)
           if table_name_opts = opts.delete(klass.table_name)
             opts = opts.merge(table_name_opts)
