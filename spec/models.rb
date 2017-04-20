@@ -121,10 +121,12 @@ def initialize_schema
     end
 
     create_table :buyers do |t|
+      t.string :name
       t.integer :product_id
     end
 
     create_table :pen_caps do |t|
+      t.string :size
       t.integer :pen_id
     end
 

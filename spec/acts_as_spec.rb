@@ -440,46 +440,66 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
   end
 
   context "Querying" do
-    before(:each) { clear_database }
+    before do
+      clear_database
 
-    it "respects supermodel attributes in .where" do
-      red_pen   = Pen.create(name: 'red pen',   price: 0.8, color: 'red')
-      blue_pen  = Pen.create(name: 'blue pen',  price: 0.8, color: 'blue')
-      black_pen = Pen.create(name: 'black pen', price: 0.9, color: 'black')
+      @red_pen   = Pen.create!(name: 'red pen',   price: 0.8, color: 'red')
+      @blue_pen  = Pen.create!(name: 'blue pen',  price: 0.8, color: 'blue')
+      @black_pen = Pen.create!(name: 'black pen', price: 0.9, color: 'black')
 
-      expect(Pen.where(price: 0.8).to_a).to eq([red_pen, blue_pen])
+      @red_pen.pen_caps.create!   size: 'S'
+      @blue_pen.pen_caps.create!  size: 'M'
+      @black_pen.pen_caps.create! size: 'M'
+
+      @red_pen.buyers.create!   name: 'Tim'
+      @blue_pen.buyers.create!  name: 'Tim'
+      @black_pen.buyers.create! name: 'John'
     end
 
-    it "respects supermodel attributes in .where!" do
-      red_pen   = Pen.create(name: 'red pen',   price: 0.8, color: 'red')
-      blue_pen  = Pen.create(name: 'blue pen',  price: 0.8, color: 'blue')
-      black_pen = Pen.create(name: 'black pen', price: 0.9, color: 'black')
+    describe '.where and .where!' do
+      it 'respects supermodel attributes' do
+        conditions = { price: 0.8 }
 
-      relation = Pen.all
-      relation.where!(price: 0.8)
-      expect(relation.to_a).to eq([red_pen, blue_pen])
+        expect(Pen.where(conditions).to_a).to eq([@red_pen, @blue_pen])
+
+        relation = Pen.all
+        relation.where!(conditions)
+        expect(relation.to_a).to eq([@red_pen, @blue_pen])
+      end
+
+      it 'works with hashes' do
+        conditions = {
+          pen_caps: { size: 'M' },
+          buyers: { name: 'Tim' }
+        }
+
+        expect(Pen.joins(:pen_caps, :buyers).where(conditions).to_a).to eq([@blue_pen])
+
+        relation = Pen.joins(:pen_caps, :buyers)
+        relation.where!(conditions)
+        expect(relation.to_a).to eq([@blue_pen])
+      end
     end
 
-    it "respects supermodel attributes in .find_by" do
-      red_pen   = Pen.create(name: 'red pen',   price: 0.8, color: 'red')
-      blue_pen  = Pen.create(name: 'blue pen',  price: 0.8, color: 'blue')
-      black_pen = Pen.create(name: 'black pen', price: 0.9, color: 'black')
+    describe '.find_by' do
+      it 'respects supermodel attributes' do
+        expect(Pen.find_by(name: 'red pen')).to   eq(@red_pen)
+        expect(Pen.find_by(name: 'blue pen')).to  eq(@blue_pen)
+        expect(Pen.find_by(name: 'black pen')).to eq(@black_pen)
+      end
 
-      expect(Pen.find_by(name: 'red pen')).to   eq(red_pen)
-      expect(Pen.find_by(name: 'blue pen')).to  eq(blue_pen)
-      expect(Pen.find_by(name: 'black pen')).to eq(black_pen)
+      it 'works with specifying the table name' do
+        expect(Pen.find_by('pens.color' => 'red')).to eq(@red_pen)
+      end
     end
 
-    it "includes supermodel attributes in Relation.scope_for_create" do
-      relation = Pen.where(name: 'new name', price: 1.4, color: 'red')
-      expect(relation.scope_for_create.keys).to include('name')
-      expect(relation.scope_for_create['name']).to eq('new name')
-    end
+    describe '.scope_for_create' do
+      it 'includes supermodel attributes' do
+        relation = Pen.where(name: 'new name', price: 1.4, color: 'red')
 
-    it "works when the submodel table name is specified" do
-      red_pen = Pen.create!(name: 'red pen', price: 0.8, color: 'red')
-
-      expect(Pen.find_by('pens.color' => 'red')).to eq(red_pen)
+        expect(relation.scope_for_create.keys).to include('name')
+        expect(relation.scope_for_create['name']).to eq('new name')
+      end
     end
   end
 
