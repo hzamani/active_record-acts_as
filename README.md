@@ -171,6 +171,19 @@ acts_as :person, -> { includes(:friends) }
 
 Make sure you know what you are doing when overwriting `polymorphic` option.
 
+### Namespaced models
+
+If your `actable` and `acts_as` models are namespaced, you need to configure them like this:
+
+```
+class MyApp::Product < ApplicationRecord
+  actable inverse_of: :pen
+end
+
+class MyApp::Pen < ApplicationRecord
+  acts_as :product, class_name: 'MyApp::Product'
+end
+```
 
 ## Caveats
 
