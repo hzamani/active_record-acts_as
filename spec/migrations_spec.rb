@@ -1,22 +1,23 @@
 require 'database_helper'
 require 'active_record/acts_as'
 
-
 class Product < ActiveRecord::Base
 end
 
-class RemoveActableFromProducts < ActiveRecord::Migration
+migration_class = ActiveRecord::Migration.respond_to?(:[]) ? ActiveRecord::Migration[4.2] : ActiveRecord::Migration
+
+class RemoveActableFromProducts < migration_class
   def change
-    change_table(:products) do |t|
+    change_table :products do |t|
       t.remove_actable
     end
   end
 end
 
-class RemoveProduceableFromProducts < ActiveRecord::Migration
+class RemoveProduceableFromProducts < migration_class
   def change
-    change_table(:products) do |t|
-      t.remove_actable(as: :produceable)
+    change_table :products do |t|
+      t.remove_actable as: :produceable
     end
   end
 end

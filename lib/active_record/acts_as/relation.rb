@@ -28,11 +28,11 @@ module ActiveRecord
           validate :actable_must_be_valid if validates_actable
 
           unless touch == false
-            after_update :touch, if: :changed?
+            after_update :touch, if: ActiveRecord.version.to_s.to_f >= 5.1 ? :saved_changes? : :changed?
           end
 
           before_save do
-            @_acting_as_changed = acting_as.changed?
+            @_acting_as_changed = ActiveRecord.version.to_s.to_f >= 5.1 ? acting_as.saved_changes? : acting_as.changed?
             true
           end
           after_commit do

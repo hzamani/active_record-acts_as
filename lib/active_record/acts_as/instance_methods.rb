@@ -42,7 +42,7 @@ module ActiveRecord
         if attribute_method?(store_attribute.to_s)
           super
         else
-          acting_as.read_store_attribute(store_attribute, key)
+          acting_as.send(:read_store_attribute, store_attribute, key)
         end
       end
 
