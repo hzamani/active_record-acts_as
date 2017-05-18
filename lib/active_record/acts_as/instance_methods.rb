@@ -9,8 +9,8 @@ module ActiveRecord
         super || acting_as?(klass)
       end
 
-      def changed?
-        super || acting_as.changed? || @_acting_as_changed
+      def save_changed?
+        super || acting_as.saved_changes? || @_acting_as_changed
       end
 
       def acting_as_foreign_key

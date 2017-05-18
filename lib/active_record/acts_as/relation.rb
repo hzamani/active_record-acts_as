@@ -26,7 +26,7 @@ module ActiveRecord
           validate :actable_must_be_valid
 
           unless touch == false
-            after_update :touch, if: :changed?
+            after_update :touch, if: :saved_changes?
           end
 
           before_save do
