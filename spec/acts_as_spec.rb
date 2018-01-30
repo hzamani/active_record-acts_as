@@ -516,6 +516,14 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     it "has a cattr_reader for the acting_as_model" do
       expect(subject.acting_as_model).to eq Inventory::ProductFeature
     end
+
+    it "can be created" do
+       expect(
+         Inventory::PenLid.create name: 'steve',
+                                  price: 10.1,
+                                  color: 'beige'
+      ).to be_a_kind_of Inventory::PenLid
+     end
   end
 
   context 'different association_methods' do

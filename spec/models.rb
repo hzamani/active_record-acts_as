@@ -73,7 +73,7 @@ end
 module Inventory
   class ProductFeature < ActiveRecord::Base
     self.table_name = 'inventory_product_features'
-    actable
+    actable inverse_of: 'product_feature'
     validates_presence_of :name, :price
 
     def present
