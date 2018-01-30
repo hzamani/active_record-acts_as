@@ -179,7 +179,7 @@ If your `actable` and `acts_as` models are namespaced, you need to configure the
 
 ```
 class MyApp::Product < ApplicationRecord
-  actable inverse_of: :pen
+  actable inverse_of: :product
 end
 
 class MyApp::Pen < ApplicationRecord
