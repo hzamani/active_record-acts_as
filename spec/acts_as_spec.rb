@@ -496,9 +496,12 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     describe '.scope_for_create' do
       it 'includes supermodel attributes' do
         relation = Pen.where(name: 'new name', price: 1.4, color: 'red')
+        # There's an issue where calling scope_for_create
+        # multiple times yeilds different hashes
+        scope = relation.scope_for_create
 
-        expect(relation.scope_for_create.keys).to include('name')
-        expect(relation.scope_for_create['name']).to eq('new name')
+        expect(scope).to include('name')
+        expect(scope['name']).to eq('new name')
       end
     end
   end

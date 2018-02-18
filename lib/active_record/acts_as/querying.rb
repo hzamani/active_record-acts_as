@@ -26,12 +26,14 @@ module ActiveRecord
     end
 
     module ScopeForCreate
-      def scope_for_create
+      def scope_for_create(attributes = nil)
+        scope = super(attributes)
         @scope_for_create ||= if acting_as?
-          where_values_hash.merge(where_values_hash(acting_as_model.table_name)).merge(create_with_value)
+          scope.merge!(where_values_hash(acting_as_model.table_name)).merge(create_with_value)
         else
-          where_values_hash.merge(create_with_value)
+          scope.merge!(create_with_value)
         end
+        scope
       end
     end
   end
