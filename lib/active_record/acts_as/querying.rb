@@ -27,7 +27,7 @@ module ActiveRecord
 
     module ScopeForCreate
       def scope_for_create(attributes = nil)
-        scope = super(attributes)
+        scope = ActiveRecord.version.to_s.to_f >= 5.2 ? super(attributes) : where_values_hash
         @scope_for_create ||= if acting_as?
           scope.merge!(where_values_hash(acting_as_model.table_name)).merge(create_with_value)
         else
