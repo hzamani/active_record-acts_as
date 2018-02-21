@@ -22,10 +22,8 @@ a separate table for each product type, i.e. a `pens` table with `color` column.
 ## Requirements
 
 * Ruby >= 2.2
-* ActiveSupport >= 4.2, <= 5.0
-* ActiveRecord >= 4.2, <= 5.0
-
-Rails 5.1 is not yet supported yet ([issue](https://github.com/krautcomputing/active_record-acts_as/issues/8)). If you'd like to get involved, any help is welcome!
+* ActiveSupport >= 4.2
+* ActiveRecord >= 4.2
 
 ## Installation
 
@@ -229,3 +227,4 @@ end
 5. Commit your changes (`git commit -am 'Add some feature'`)
 6. Push to the branch (`git push origin my-new-feature`)
 7. Create a new Pull Request
+
