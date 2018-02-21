@@ -9,6 +9,10 @@ module ActiveRecord
         super || acting_as?(klass)
       end
 
+      def saved_changes?
+        super || acting_as.has_changes_to_save? || (defined?(@_acting_as_changed) ? @_acting_as_changed : false)
+      end
+
       def changed?
         super || acting_as.changed? || (defined?(@_acting_as_changed) ? @_acting_as_changed : false)
       end

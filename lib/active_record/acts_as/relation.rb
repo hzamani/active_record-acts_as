@@ -32,7 +32,7 @@ module ActiveRecord
           end
 
           before_save do
-            @_acting_as_changed = ActiveRecord.version.to_s.to_f >= 5.1 ? acting_as.saved_changes? : acting_as.changed?
+            @_acting_as_changed = ActiveRecord.version.to_s.to_f >= 5.1 ? acting_as.has_changes_to_save? : acting_as.changed?
             true
           end
           after_commit do
