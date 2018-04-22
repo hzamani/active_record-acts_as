@@ -13,7 +13,8 @@ module ActiveRecord
           opts, acts_as_opts = opts.stringify_keys.partition do |k, v|
             v.is_a?(Hash) ||
             k =~ /\./     ||
-            column_names.include?(k.to_s)
+            column_names.include?(k.to_s) ||
+            attribute_method?(k.to_s)
           end.map(&:to_h)
 
           if acts_as_opts.any?

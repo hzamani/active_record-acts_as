@@ -481,6 +481,16 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       end
     end
 
+    describe 'relational methods' do
+      it "allows relational members in query conditions" do
+        magenta_collection = PenCollection.new
+        magenta_pen = magenta_collection.pens.build(color: "magenta", price: 1.0, name: "magenta")
+        magenta_collection.save!
+
+        expect(Pen.where(pen_collection: magenta_pen.pen_collection).take!).to eq(magenta_pen)
+      end
+    end
+
     describe '.find_by' do
       it 'respects supermodel attributes' do
         expect(Pen.find_by(name: 'red pen')).to   eq(@red_pen)
