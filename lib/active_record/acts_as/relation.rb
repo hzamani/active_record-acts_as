@@ -93,7 +93,7 @@ module ActiveRecord
           end
 
           def self.scope(*)
-            callable_by_submodel super
+            super.tap(&method(:callable_by_submodel))
           end
 
           alias_method :specific, name
