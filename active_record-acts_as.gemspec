@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Hassan Zamani", "Manuel Meurer"]
   spec.email         = ["hsn.zamani@gmail.com", "manuel@krautcomputing.com"]
   spec.summary       = %q{Simulate multi-table inheritance for activerecord models}
-  spec.description   = %q{Simulate multi-table inheritance for activerecord models using a plymorphic association}
+  spec.description   = %q{Simulate multi-table inheritance for activerecord models using a polymorphic association}
   spec.homepage      = "http://github.com/krautcomputing/active_record-acts_as"
   spec.license       = "MIT"
 
