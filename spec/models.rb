@@ -91,6 +91,15 @@ end
 
 def initialize_schema
   initialize_database do
+    create_table :users do |t|
+      t.timestamps null: true
+      t.actable
+    end
+
+    create_table :customers do |t|
+      t.integer :identifier
+    end
+
     create_table :pen_collections do |t|
       t.timestamps null: true
     end

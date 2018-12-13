@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Hassan Zamani", "Manuel Meurer"]
   spec.email         = ["hsn.zamani@gmail.com", "manuel@krautcomputing.com"]
   spec.summary       = %q{Simulate multi-table inheritance for activerecord models}
-  spec.description   = %q{Simulate multi-table inheritance for activerecord models using a plymorphic association}
+  spec.description   = %q{Simulate multi-table inheritance for activerecord models using a polymorphic association}
   spec.homepage      = "http://github.com/krautcomputing/active_record-acts_as"
   spec.license       = "MIT"
 
@@ -27,6 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "appraisal", "~> 2.1"
   spec.add_development_dependency "guard-rspec", "~> 4.7"
 
-  spec.add_dependency "activesupport", ">= 4.2"
-  spec.add_dependency "activerecord", ">= 4.2"
+  spec.add_dependency "activesupport", ">= 4.2", "< 5.2.2.rc1"
+  spec.add_dependency "activerecord", ">= 4.2", "< 5.2.2.rc1"
 end
