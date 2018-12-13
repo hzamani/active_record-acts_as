@@ -411,6 +411,28 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     end
   end
 
+  describe '.actable' do
+    class User < ActiveRecord::Base
+      actable -> { unscope(:where) }
+    end
+
+    class Customer < ActiveRecord::Base
+      default_scope { where('identifier > 1') }
+      acts_as :user
+
+      validates_presence_of :identifier
+    end
+
+    context 'with scope' do
+      it 'unscopes default scope' do
+        customer = Customer.create!(identifier: 1)
+        user = customer.user.reload
+        expect(user).to be_a User
+        expect(user.actable).to eq(customer)
+      end
+    end
+  end
+
   context 'class methods' do
     before(:each) { clear_database }
 
