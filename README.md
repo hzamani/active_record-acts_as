@@ -2,7 +2,6 @@
 [![Build Status](https://travis-ci.org/krautcomputing/active_record-acts_as.svg)](https://travis-ci.org/krautcomputing/active_record-acts_as)
 [![Code Climate](https://codeclimate.com/github/krautcomputing/active_record-acts_as.png)](https://codeclimate.com/github/krautcomputing/active_record-acts_as)
 [![Coverage Status](https://coveralls.io/repos/krautcomputing/active_record-acts_as/badge.png)](https://coveralls.io/r/krautcomputing/active_record-acts_as)
-[![Dependency Status](https://gemnasium.com/krautcomputing/active_record-acts_as.svg)](https://gemnasium.com/krautcomputing/active_record-acts_as)
 
 # ActiveRecord::ActsAs
 
