@@ -28,8 +28,14 @@ module ActiveRecord
 
     module ScopeForCreate
       def scope_for_create(attributes = nil)
+        unless acting_as?
+          return super(attributes) if Gem::Dependency.new('', '>= 5.2.1', '< 5.2.2').match?('', ActiveRecord.version)
+          return super()
+        end
+
         scope = respond_to?(:values_for_create) ? values_for_create(attributes) : where_values_hash
-        scope.merge!(where_values_hash(acting_as_model.table_name)) if acting_as?
+        scope.merge!(where_values_hash(acting_as_model.table_name))
+        scope.merge!(attributes) if attributes
         scope.merge(create_with_value)
       end
     end
