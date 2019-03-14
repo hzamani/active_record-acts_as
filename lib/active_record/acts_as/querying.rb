@@ -29,8 +29,11 @@ module ActiveRecord
     module ScopeForCreate
       def scope_for_create(attributes = nil)
         unless acting_as?
-          return super(attributes) if Gem::Dependency.new('', '>= 5.2.1', '< 5.2.2').match?('', ActiveRecord.version)
-          return super()
+          if Gem::Dependency.new('', '>= 5.2.1', '< 5.2.2').match?('', ActiveRecord.version)
+            return super(attributes)
+          else
+            return super()
+          end
         end
 
         scope = respond_to?(:values_for_create) ? values_for_create(attributes) : where_values_hash
