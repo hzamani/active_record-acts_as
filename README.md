@@ -1,6 +1,6 @@
 # Development moved
 
-Active development of this project has moved to [the `krautcomputing` fork](https://github.com/krautcomputing/active_record-acts_as). Please report issues and open PRs over there!
+Active development of this project has moved to [the fork of `manuelmeurer`](https://github.com/manuelmeurer/active_record-acts_as). Please report issues and open PRs over there!
 
 # ActiveRecord::ActsAs
 
