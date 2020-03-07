@@ -1,7 +1,7 @@
 [![Gem Version](https://badge.fury.io/rb/active_record-acts_as.svg)](http://badge.fury.io/rb/active_record-acts_as)
-[![Build Status](https://travis-ci.org/krautcomputing/active_record-acts_as.svg)](https://travis-ci.org/krautcomputing/active_record-acts_as)
-[![Code Climate](https://codeclimate.com/github/krautcomputing/active_record-acts_as.png)](https://codeclimate.com/github/krautcomputing/active_record-acts_as)
-[![Coverage Status](https://coveralls.io/repos/krautcomputing/active_record-acts_as/badge.png)](https://coveralls.io/r/krautcomputing/active_record-acts_as)
+[![Build Status](https://travis-ci.org/manuelmeurer/active_record-acts_as.svg)](https://travis-ci.org/manuelmeurer/active_record-acts_as)
+[![Code Climate](https://codeclimate.com/github/manuelmeurer/active_record-acts_as.png)](https://codeclimate.com/github/manuelmeurer/active_record-acts_as)
+[![Coverage Status](https://coveralls.io/repos/manuelmeurer/active_record-acts_as/badge.png)](https://coveralls.io/r/manuelmeurer/active_record-acts_as)
 
 # ActiveRecord::ActsAs
 
@@ -219,7 +219,7 @@ end
 
 ## Contributing
 
-1. Fork it ( https://github.com/krautcomputing/active_record-acts_as/fork )
+1. Fork it (https://github.com/manuelmeurer/active_record-acts_as/fork)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Test changes don't break anything (`rspec`)
 4. Add specs for your new feature
