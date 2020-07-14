@@ -79,11 +79,11 @@ module ActiveRecord
         def actable(scope = nil, **options)
           name = options.delete(:as) || :actable
 
-          reflections = belongs_to(name, scope, options.reverse_merge(validate: false,
-                                                                      polymorphic: true,
-                                                                      dependent: :destroy,
-                                                                      autosave: true,
-                                                                      inverse_of: to_s.underscore))
+          reflections = belongs_to(name, scope, **options.reverse_merge(validate: false,
+                                                                        polymorphic: true,
+                                                                        dependent: :destroy,
+                                                                        autosave: true,
+                                                                        inverse_of: to_s.underscore))
 
           cattr_reader(:actable_reflection) { reflections.stringify_keys[name.to_s] }
 
