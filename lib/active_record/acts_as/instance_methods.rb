@@ -19,8 +19,8 @@ module ActiveRecord
 
       def actable_must_be_valid
         unless acting_as.valid?
-          acting_as.errors.each do |attribute, message|
-            errors.add(attribute, message) unless errors[attribute].include?(message)
+          acting_as.errors.each do |error|
+            errors.add(error.attribute, error.message) unless errors[error.attribute].include?(error.message)
           end
         end
       end
@@ -39,6 +39,14 @@ module ActiveRecord
           super
         else
           acting_as.send(:write_attribute, attr_name, value, *args, &block)
+        end
+      end
+
+      def _write_attribute(attr_name, value, *args, &block)
+        if attribute_method?(attr_name.to_s)
+          super
+        else
+          acting_as.send(:_write_attribute, attr_name, value, *args, &block)
         end
       end
 
@@ -83,10 +91,10 @@ module ActiveRecord
         end
       end
 
-      def touch(*args)
+      def touch(*args, time: nil)
         self_args, acting_as_args = args.partition { |arg| has_attribute?(arg, true) }
-        super(*self_args) if self_args.any?
-        acting_as.touch(*acting_as_args) if acting_as.persisted?
+        super(*self_args, time: time) if self_args.any?
+        acting_as.touch(*acting_as_args, time: time) if acting_as.persisted?
       end
 
       def respond_to?(name, include_private = false, as_original_class = false)
