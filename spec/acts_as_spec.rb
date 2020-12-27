@@ -221,10 +221,11 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
 
     context 'touching' do
       describe '#touch with arguments' do
-        it "forwards supermodel arguments tothe supermodel" do
+        it "forwards supermodel arguments to the supermodel" do
+          now = Time.current
           pen.save!
-          expect(pen.product).to receive(:touch).with(:updated_at)
-          pen.touch(:updated_at, :designed_at)
+          expect(pen.product).to receive(:touch).with(:updated_at, {time: now})
+          pen.touch(:updated_at, time: now)
         end
 
         it "updates submodel arguments" do
@@ -236,7 +237,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       describe '#touch without arguments' do
         it "touches the supermodel" do
           pen.save!
-          expect(pen.product).to receive(:touch).with(no_args)
+          expect(pen.product).to receive(:touch).with(time: nil)
           pen.touch
         end
       end
@@ -299,21 +300,21 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
         it "combines supermodel and submodel errors" do
           pen = Pen.new
           expect(pen).to be_invalid
-          expect(pen.errors.to_h).to eq(
-            name:  "can't be blank",
-            price: "can't be blank",
-            color: "can't be blank"
+          expect(pen.errors.to_hash).to eq(
+            name:  ["can't be blank"],
+            price: ["can't be blank"],
+            color: ["can't be blank"]
           )
           pen.name = 'testing'
           expect(pen).to be_invalid
-          expect(pen.errors.to_h).to eq(
-            price: "can't be blank",
-            color: "can't be blank"
+          expect(pen.errors.to_hash).to eq(
+            price: ["can't be blank"],
+            color: ["can't be blank"]
           )
           pen.color = 'red'
           expect(pen).to be_invalid
-          expect(pen.errors.to_h).to eq(
-            price: "can't be blank"
+          expect(pen.errors.to_hash).to eq(
+            price: ["can't be blank"]
           )
           pen.price = 0.8
           expect(pen).to be_valid
@@ -324,8 +325,8 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
         it "unless validates_actable is set to false" do
           pen = IsolatedPen.new
           expect(pen).to be_invalid
-          expect(pen.errors.to_h).to eq(
-            color: "can't be blank"
+          expect(pen.errors.to_hash).to eq(
+            color: ["can't be blank"]
           )
           pen.color = 'red'
           expect(pen).to be_valid
@@ -402,7 +403,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     it "returns a query for the actable records" do
       red_pen   = Pen.create!(name: 'red pen',   price: 0.8, color: 'red')
       blue_pen  = Pen.create!(name: 'blue pen',  price: 0.8, color: 'blue')
-      black_pen = Pen.create!(name: 'black pen', price: 0.9, color: 'black')
+      _black_pen = Pen.create!(name: 'black pen', price: 0.9, color: 'black')
 
       actables = Pen.where(price: 0.8).actables
 
@@ -438,7 +439,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
 
     context 'when they are defined via `scope`' do
       it 'can be called from the submodel' do
-        cheap_pen     = Pen.create!(name: 'cheap pen',     price: 0.5, color: 'blue')
+        _cheap_pen     = Pen.create!(name: 'cheap pen',     price: 0.5, color: 'blue')
         expensive_pen = Pen.create!(name: 'expensive pen', price: 1,   color: 'red')
 
         expect(Product.with_price_higher_than(0.5).to_a).to eq([expensive_pen.acting_as])
@@ -528,6 +529,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
     describe '.scope_for_create' do
       it 'includes supermodel attributes' do
         relation = Pen.where(name: 'new name', price: 1.4, color: 'red')
+
         expect(relation.scope_for_create).to include('name')
         expect(relation.scope_for_create['name']).to eq('new name')
       end
@@ -562,7 +564,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       Object.send(:remove_const, :Pen)
     end
 
-    it "should not include the selected attribute when associating using 'eager_load'" do
+    it "should include the selected attribute when associating using 'eager_load'" do
       class Pen < ActiveRecord::Base
         acts_as :product , {association_method: :eager_load}
         store_accessor :settings, :option1
@@ -570,7 +572,7 @@ RSpec.describe "ActiveRecord::Base model with #acts_as called" do
       end
       Pen.create pen_attributes
 
-      expect(Pen.select("'something' as thing").first['thing']).to be_nil
+      expect(Pen.select("'something' as thing").first['thing']).to eq 'something'
     end
 
     it "should include the selected attribute in the model when associating using 'includes'" do
