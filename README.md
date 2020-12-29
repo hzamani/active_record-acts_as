@@ -1,5 +1,5 @@
 [![Gem Version](https://badge.fury.io/rb/active_record-acts_as.svg)](http://badge.fury.io/rb/active_record-acts_as)
-[![Build Status](https://travis-ci.org/manuelmeurer/active_record-acts_as.svg)](https://travis-ci.org/manuelmeurer/active_record-acts_as)
+[![Build Status](https://travis-ci.org/chaadow/active_record-acts_as.svg)](https://travis-ci.org/chaadow/active_record-acts_as)
 
 # ActiveRecord::ActsAs
 
@@ -217,7 +217,7 @@ end
 
 ## Contributing
 
-1. Fork it (https://github.com/manuelmeurer/active_record-acts_as/fork)
+1. Fork it (https://github.com/chaadow/active_record-acts_as/fork)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Test changes don't break anything (`rspec`)
 4. Add specs for your new feature
