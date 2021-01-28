@@ -19,8 +19,10 @@ module ActiveRecord
 
       def actable_must_be_valid
         unless acting_as.valid?
-          acting_as.errors.each do |error|
-            errors.add(error.attribute, error.message) unless errors[error.attribute].include?(error.message)
+          acting_as.errors.messages.each do |attribute, messages|
+            messages.each do |message|
+              errors.add(attribute, message) unless errors[attribute].include?(message)
+            end
           end
         end
       end
